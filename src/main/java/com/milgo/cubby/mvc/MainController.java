@@ -35,7 +35,7 @@ public class MainController {
 		if(bindingResult.hasErrors()){
 			return "newUserEdit";
 		}
-		//bugFix change 2
+		
 		System.out.println("newUser");
 		return "";
 	}
