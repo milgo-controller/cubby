@@ -6,5 +6,6 @@ public interface UserDetailsDao {
 
 	public void addUser(UserDetails userDetails);
 	public void removeUser(UserDetails userDetails);
+	public UserDetails getUser(String login);
 	
 }

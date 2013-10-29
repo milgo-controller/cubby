@@ -1,7 +1,12 @@
 package com.milgo.cubby.dao.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +28,10 @@ public class UserDetailsDaoImpl implements UserDetailsDao{
 	public void addUser(UserDetails userDetails) {
 		getCurrentSession().save(userDetails);	
 	}
-
+	
+	@Transactional
 	public void removeUser(UserDetails userDetails) {
-		
+		getCurrentSession().delete(userDetails);
 	}
 
 	public SessionFactory getSessionFactory() {
@@ -34,6 +40,14 @@ public class UserDetailsDaoImpl implements UserDetailsDao{
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+	}
+
+	public UserDetails getUser(String login){
+		List<?> list = sessionFactory.getCurrentSession()
+				.createCriteria(UserDetails.class)
+				.add(Restrictions.eq("login", login)).list();
+		if(list.isEmpty())return null;
+		else return (UserDetails)list.get(0);
 	}
 	
 	
