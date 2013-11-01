@@ -31,6 +31,11 @@
 				<td><sf:errors path="password" cssClass="error" /></td>
 			</tr>
 			<tr>
+				<th><label for="user_confirm_pass">Confirm Password</label></th>
+				<td><sf:password path="confirmPassword" id="user_confirm_pass" size="15" showPassword="true"/></td>
+				<td><sf:errors path="confirmPassword" cssClass="error" /></td>
+			</tr>
+			<tr>
 				<th></th>
 				<td><input name="commit" type="submit" value="Create Account"/></td>
 			</tr>

@@ -58,5 +58,6 @@ public class TestClass{
 		assertTrue(user3 == null);
 		
 	}
-
+	//dodanie uzytkownika o tej samej nazwie
+	//wymagania odnosnie hasla
 }

@@ -3,8 +3,16 @@ package com.milgo.cubby.model;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+import com.milgo.cubby.validator.annotations.FieldMatch;
+
 @Entity
 @Table(name="user_details")
+@FieldMatch.List(
+		value = { 
+				@FieldMatch(first="password", 
+						second="confirmPassword", 
+						message="The password fields must match")
+		} )
 public class UserDetails {
 
 	@Id
@@ -12,11 +20,15 @@ public class UserDetails {
 	@Column(name="ID", unique=true, nullable=false)
 	public Integer Id;
 	
+	//no whitespaces
 	@Size(min = 5, max = 15, message = "Login to short")
 	public String login;
 	
 	@Size(min = 5, max = 15, message = "Password to short!")
 	public String password;
+	
+	@Transient
+	public String confirmPassword;
 	
 	public Integer getId() {
 		return Id;
@@ -25,6 +37,7 @@ public class UserDetails {
 		Id = id;
 	}
 	
+	//no whitespaces
 	@Column(name="LOGIN", unique=true, nullable=false)
 	public String getLogin() {
 		return login;
@@ -42,6 +55,16 @@ public class UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+	
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+	
+	
 	
 	
 }
