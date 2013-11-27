@@ -9,13 +9,13 @@
           	http://www.springframework.org/schema/mvc 
           	http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
           	http://www.springframework.org/schema/context
-          	http://www.springframework.org/schema/context/spring-context.xsd
+          	http://www.springframework.org/schema/context/spring-context-3.1.xsd
           	http://www.springframework.org/schema/tx 
-          	http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+          	http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
 <mvc:resources location="/resources" mapping="/resources/**" />
 
-<mvc:annotation-driven />
+<mvc:annotation-driven/>
 
 <context:component-scan base-package="com.milgo.cubby" />
 
@@ -26,11 +26,13 @@
 </bean>
 
 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-	<property name="url" value="jdbc:mysql://localhost:3306/cubby" />
-	<property name="username" value="milgo" />
-	<property name="password" value="admin" />
+	<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+	<property name="url" value="jdbc:hsqldb:hsql://localhost:9001/cubby" />
+	<property name="username" value="SA" />
+	<property name="password" value="" />
 </bean>
+
+<!--<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />-->
 
 <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 	<property name="dataSource" ref="dataSource" />
@@ -43,7 +45,7 @@
 	</property>
 	<property name="hibernateProperties">
 		<props>
-			<prop key="dialect">org.hibernate.dialect.MySQLDialect</prop>
+			<prop key="dialect">org.hibernate.dialect.HSQLDialect</prop>
 			<prop key="hibernate.show_sql">true</prop>
 		</props>
 	</property>

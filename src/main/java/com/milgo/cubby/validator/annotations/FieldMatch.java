@@ -17,14 +17,13 @@ import com.milgo.cubby.validator.FieldMatchValidator;
 @Documented
 public @interface FieldMatch {
 
-	String message() default "{constraints.fieldmatch}";
+	String message() default "{com.milgo.cubby.validator.annotations.FieldMatch}";
 	
 	Class<?>[] groups() default {};
 	
 	Class<? extends Payload>[] payload() default {};
 	
 	String first();
-	
 	String second();
 	
 	@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})

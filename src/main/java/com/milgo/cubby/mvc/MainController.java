@@ -28,7 +28,6 @@ public class MainController {
 		System.out.println("welcome");
 		return "login";
 	}
-
 	
 	@RequestMapping({"/register"})
 	public String showNewUserEditPage(Model model){
@@ -42,7 +41,7 @@ public class MainController {
 		if(bindingResult.hasErrors()){
 			
 			List<FieldError> errors = bindingResult.getFieldErrors();
-		    for (FieldError error : errors ) {
+		    for (FieldError error : errors) {
 		        System.out.println (error.getObjectName() + " - " + error.getDefaultMessage());
 		    }
 			

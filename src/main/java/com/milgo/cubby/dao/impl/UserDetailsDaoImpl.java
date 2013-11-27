@@ -1,9 +1,7 @@
 package com.milgo.cubby.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -42,7 +40,8 @@ public class UserDetailsDaoImpl implements UserDetailsDao{
 		this.sessionFactory = sessionFactory;
 	}
 
-	public UserDetails getUser(String login){
+	@Transactional
+	public UserDetails getUserByLogin(String login){
 		List<?> list = sessionFactory.getCurrentSession()
 				.createCriteria(UserDetails.class)
 				.add(Restrictions.eq("login", login)).list();

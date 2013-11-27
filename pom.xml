@@ -19,10 +19,16 @@
       <scope>test</scope>
     </dependency>
     
-    <dependency>
+	<dependency>
 		<groupId>jstl</groupId>
 		<artifactId>jstl</artifactId>
 		<version>1.2</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>taglibs</groupId>
+		<artifactId>standard</artifactId>
+		<version>1.1.2</version>
 	</dependency>
    <!--
 	    Core utilities used by other modules.
@@ -183,12 +189,19 @@
   	  <scope>test</scope>
     </dependency>
     
-    <dependency>
+<!--<dependency>
 		<groupId>javax.servlet</groupId>
 		<artifactId>servlet-api</artifactId>
 		<version>2.5</version>
-		<scope>test</scope>
-	</dependency>
+		<scope>provided</scope>
+	</dependency>-->
+	
+<!--<dependency>
+                <groupId>javax.el</groupId>
+                <artifactId>el-api</artifactId>
+                <version>2.2</version>
+                <scope>provided</scope>
+    </dependency>-->
     
     <dependency>
 		<groupId>org.hibernate</groupId>
@@ -208,11 +221,11 @@
   		<version>1.4</version>
 	</dependency>
             
-	<dependency>
+	<!-- <dependency>
 		<groupId>mysql</groupId>
 		<artifactId>mysql-connector-java</artifactId>
 		<version>5.1.26</version>
-	</dependency>
+	</dependency> -->
 	
     <dependency>
     	<groupId>javassist</groupId>
@@ -225,7 +238,19 @@
 		<artifactId>commons-beanutils</artifactId>
 		<version>1.8.3</version>
 	</dependency>
-  
+	
+	<dependency>
+		<groupId>org.hsqldb</groupId>
+		<artifactId>hsqldb</artifactId>
+		<version>2.3.1</version>
+	</dependency>
+            
+<!--<dependency>
+		<groupId>org.glassfish.web</groupId>
+		<artifactId>el-impl</artifactId>
+		<version>2.2</version>
+	</dependency>-->
+	
   </dependencies>
   <build>
     <finalName>Cubby</finalName>

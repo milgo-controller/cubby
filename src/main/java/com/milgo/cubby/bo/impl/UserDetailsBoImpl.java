@@ -29,8 +29,8 @@ public class UserDetailsBoImpl implements UserDetailsBo{
 		userDetailsDao.removeUser(userDetails);
 	}
 
-	public UserDetails getUser(String login) {
-		return userDetailsDao.getUser(login);
+	public UserDetails getUserByLogin(String login) {
+		return userDetailsDao.getUserByLogin(login);
 	}
 
 }
