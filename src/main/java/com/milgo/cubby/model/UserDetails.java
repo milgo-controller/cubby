@@ -48,7 +48,6 @@ public class UserDetails {
 	
 	//no whitespaces
 	@Column(name="LOGIN", unique=true, nullable=false)
-	
 	public String getLogin() {
 		return login;
 	}

@@ -9,6 +9,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.milgo.cubby.dao.UserDetailsDao;
+import com.milgo.cubby.model.UserDetails;
 import com.milgo.cubby.validator.annotations.UniqueField;
 
 public class UniqueFieldValidator implements ConstraintValidator<UniqueField, Object>{
@@ -25,11 +26,6 @@ public class UniqueFieldValidator implements ConstraintValidator<UniqueField, Ob
 	}
 
 	public boolean isValid(Object bean, ConstraintValidatorContext constraintValidatorContext) {
-		boolean isValid = false;
-		if(bean == null || userDetailsDao == null){
-			System.out.println("null");
-			return false;
-		}
 		
 		String fieldValue = "";
 		try {
@@ -45,18 +41,22 @@ public class UniqueFieldValidator implements ConstraintValidator<UniqueField, Ob
 			e.printStackTrace();
 		}
 		
-		isValid = userDetailsDao.getUserByLogin(fieldValue) == null;
-		
-		if(!isValid){
+		if(bean == null || userDetailsDao == null){
 			constraintValidatorContext.disableDefaultConstraintViolation();
-			constraintValidatorContext.buildConstraintViolationWithTemplate(errorMessage).addPropertyNode(fieldName).addConstraintViolation();
+			constraintValidatorContext.buildConstraintViolationWithTemplate("Error!").addPropertyNode(fieldName).addConstraintViolation();
+			return false;
 		}
 		
-		return isValid;
+		System.out.println(fieldValue);
+		UserDetails user = userDetailsDao.getUserByLogin(fieldValue);
+
+		if(user == null){
+			constraintValidatorContext.disableDefaultConstraintViolation();
+			constraintValidatorContext.buildConstraintViolationWithTemplate(errorMessage).addPropertyNode(fieldName).addConstraintViolation();
+			return false;
+		}
+		
+		return false;
 	}
-
-
-
-
 
 }
