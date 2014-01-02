@@ -49,7 +49,12 @@ public class MainController {
 			return "newUserEdit";
 		}
 		
-		userDetailsDao.addUser(userDetails);
+		try{
+			userDetailsDao.addUser(userDetails);
+		}catch(org.hibernate.exception.ConstraintViolationException ex){
+			bindingResult.rejectValue("login", "loginUsedErrorMessage", "Login used!");
+			return "newUserEdit";
+		}
 		
 		System.out.println("newUser");
 		return "userAdded";

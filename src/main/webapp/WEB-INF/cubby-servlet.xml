@@ -32,8 +32,6 @@
 	<property name="password" value="" />
 </bean>
 
-<!--<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />-->
-
 <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 	<property name="dataSource" ref="dataSource" />
 	<property name="annotatedClasses">

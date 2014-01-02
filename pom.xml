@@ -8,7 +8,7 @@
   <name>Cubby Maven Webapp</name>
   <url>http://maven.apache.org</url>
     <properties>
-    	<org.springframework.version>3.0.5.RELEASE</org.springframework.version>
+    	<org.springframework.version>3.2.0.RELEASE</org.springframework.version>
     	<hibernate.version>3.6.10.Final</hibernate.version>
   	</properties>
   <dependencies>
@@ -39,7 +39,7 @@
 	  <artifactId>spring-core</artifactId>
 	  <version>${org.springframework.version}</version>
 	</dependency>
-	 
+	
 	<!--
 	    Expression Language (depends on spring-core)
 	    Define this if you use Spring Expression APIs (org.springframework.expression.*)
@@ -175,6 +175,8 @@
 	  <scope>test</scope>
 	</dependency>
 	
+
+	
 	<!-- AOP dependency -->
     <dependency>
     	<groupId>cglib</groupId>
@@ -189,20 +191,13 @@
   	  <scope>test</scope>
     </dependency>
     
-<!--<dependency>
+	<dependency>
 		<groupId>javax.servlet</groupId>
 		<artifactId>servlet-api</artifactId>
 		<version>2.5</version>
-		<scope>provided</scope>
-	</dependency>-->
+		<scope>test</scope>
+	</dependency>
 	
-<!--<dependency>
-                <groupId>javax.el</groupId>
-                <artifactId>el-api</artifactId>
-                <version>2.2</version>
-                <scope>provided</scope>
-    </dependency>-->
-    
     <dependency>
 		<groupId>org.hibernate</groupId>
 		<artifactId>hibernate-validator</artifactId>
@@ -220,12 +215,6 @@
   		<artifactId>commons-dbcp</artifactId>
   		<version>1.4</version>
 	</dependency>
-            
-	<!-- <dependency>
-		<groupId>mysql</groupId>
-		<artifactId>mysql-connector-java</artifactId>
-		<version>5.1.26</version>
-	</dependency> -->
 	
     <dependency>
     	<groupId>javassist</groupId>
@@ -244,14 +233,37 @@
 		<artifactId>hsqldb</artifactId>
 		<version>2.3.1</version>
 	</dependency>
-            
-<!--<dependency>
-		<groupId>org.glassfish.web</groupId>
-		<artifactId>el-impl</artifactId>
-		<version>2.2</version>
-	</dependency>-->
 	
+	<dependency>
+    	<groupId>com.github.springtestdbunit</groupId>
+    	<artifactId>spring-test-dbunit</artifactId>
+    	<version>1.0.0</version>
+    	<scope>test</scope>
+	</dependency>
+	
+    <dependency>
+		<groupId>org.dbunit</groupId>
+		<artifactId>dbunit</artifactId>
+		<version>2.4.9</version>
+		<scope>test</scope>
+	</dependency>
+
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-entitymanager</artifactId>
+		<version>${hibernate.version}</version>
+	</dependency>
   </dependencies>
+  <repositories>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Maven Repository Switchboard</name>
+      <url>http://repo1.maven.org/maven2</url>
+    </repository>
+  </repositories>
   <build>
     <finalName>Cubby</finalName>
     <plugins>

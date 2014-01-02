@@ -1,7 +1,5 @@
 package com.milgo.cubby.validator;
 
-import java.lang.reflect.InvocationTargetException;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -26,37 +24,48 @@ public class UniqueFieldValidator implements ConstraintValidator<UniqueField, Ob
 	}
 
 	public boolean isValid(Object bean, ConstraintValidatorContext constraintValidatorContext) {
+
+		if(userDetailsDao == null)return false;
 		
 		String fieldValue = "";
 		try {
 			fieldValue = BeanUtils.getProperty(bean, fieldName);
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		if(bean == null || userDetailsDao == null){
-			constraintValidatorContext.disableDefaultConstraintViolation();
-			constraintValidatorContext.buildConstraintViolationWithTemplate("Error!").addPropertyNode(fieldName).addConstraintViolation();
-			return false;
-		}
-		
+		UserDetails user = null;   
 		System.out.println(fieldValue);
-		UserDetails user = userDetailsDao.getUserByLogin(fieldValue);
+        user = userDetailsDao.getUserByLogin(fieldValue);
+		
+		/*if(bean == null){ //bean null when testing?
+			constraintValidatorContext.disableDefaultConstraintViolation();
+			constraintValidatorContext.buildConstraintViolationWithTemplate("Error #1").addPropertyNode(fieldName).addConstraintViolation();
+			System.out.println("tutaj1");
+			return false;
+		}*/
+		
+		/*if(userDetailsDao == null){ //bean null when testing?
+			constraintValidatorContext.disableDefaultConstraintViolation();
+			constraintValidatorContext.buildConstraintViolationWithTemplate("Error #2").addPropertyNode(fieldName).addConstraintViolation();
+			System.out.println("tutaj2");
+			return false;
+		}*/
+		
+		/*if(userDetailsDao == null)System.out.println("userDetailsDao == null");
+		System.out.println(fieldValue);
+		UserDetails user = null;
+		userDetailsDao.getUserByLogin(fieldValue);
+		if(user == null)System.out.println("oh shit null!");*/
 
-		if(user == null){
+		if(user != null){
+			//System.out.println("shit!");
 			constraintValidatorContext.disableDefaultConstraintViolation();
 			constraintValidatorContext.buildConstraintViolationWithTemplate(errorMessage).addPropertyNode(fieldName).addConstraintViolation();
 			return false;
 		}
 		
-		return false;
+		return true;
 	}
 
 }

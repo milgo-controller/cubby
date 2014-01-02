@@ -5,6 +5,7 @@
   <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
   <classpathentry kind="src" path="src/main/resources" excluding="**/*.java"/>
   <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/validation/validation-api/1.1.0.Final/validation-api-1.1.0.Final.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
@@ -12,23 +13,23 @@
   <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/jstl/jstl/1.2/jstl-1.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/taglibs/standard/1.1.2/standard-1.1.2.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/3.0.5.RELEASE/spring-core-3.0.5.RELEASE.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-asm/3.0.5.RELEASE/spring-asm-3.0.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/3.2.0.RELEASE/spring-core-3.2.0.RELEASE.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-expression/3.0.5.RELEASE/spring-expression-3.0.5.RELEASE.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-beans/3.0.5.RELEASE/spring-beans-3.0.5.RELEASE.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-aop/3.0.5.RELEASE/spring-aop-3.0.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-expression/3.2.0.RELEASE/spring-expression-3.2.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-beans/3.2.0.RELEASE/spring-beans-3.2.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-aop/3.2.0.RELEASE/spring-aop-3.2.0.RELEASE.jar"/>
   <classpathentry kind="var" path="M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-context/3.0.5.RELEASE/spring-context-3.0.5.RELEASE.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-context-support/3.0.5.RELEASE/spring-context-support-3.0.5.RELEASE.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-tx/3.0.5.RELEASE/spring-tx-3.0.5.RELEASE.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-jdbc/3.0.5.RELEASE/spring-jdbc-3.0.5.RELEASE.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-orm/3.0.5.RELEASE/spring-orm-3.0.5.RELEASE.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-oxm/3.0.5.RELEASE/spring-oxm-3.0.5.RELEASE.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-web/3.0.5.RELEASE/spring-web-3.0.5.RELEASE.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-webmvc/3.0.5.RELEASE/spring-webmvc-3.0.5.RELEASE.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-webmvc-portlet/3.0.5.RELEASE/spring-webmvc-portlet-3.0.5.RELEASE.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-test/3.0.5.RELEASE/spring-test-3.0.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-context/3.2.0.RELEASE/spring-context-3.2.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-context-support/3.2.0.RELEASE/spring-context-support-3.2.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-tx/3.2.0.RELEASE/spring-tx-3.2.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-jdbc/3.2.0.RELEASE/spring-jdbc-3.2.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-orm/3.2.0.RELEASE/spring-orm-3.2.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-oxm/3.2.0.RELEASE/spring-oxm-3.2.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-lang/commons-lang/2.5/commons-lang-2.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-web/3.2.0.RELEASE/spring-web-3.2.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-webmvc/3.2.0.RELEASE/spring-webmvc-3.2.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-webmvc-portlet/3.2.0.RELEASE/spring-webmvc-portlet-3.2.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-test/3.2.0.RELEASE/spring-test-3.2.0.RELEASE.jar"/>
   <classpathentry kind="var" path="M2_REPO/cglib/cglib/2.2/cglib-2.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/asm/asm/3.1/asm-3.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/mockito/mockito-all/1.9.5/mockito-all-1.9.5.jar"/>
@@ -47,4 +48,7 @@
   <classpathentry kind="var" path="M2_REPO/javassist/javassist/3.12.1.GA/javassist-3.12.1.GA.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/hsqldb/hsqldb/2.3.1/hsqldb-2.3.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/github/springtestdbunit/spring-test-dbunit/1.0.0/spring-test-dbunit-1.0.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/dbunit/dbunit/2.4.9/dbunit-2.4.9.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-entitymanager/3.6.10.Final/hibernate-entitymanager-3.6.10.Final.jar"/>
 </classpath>

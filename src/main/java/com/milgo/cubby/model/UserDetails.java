@@ -20,7 +20,7 @@ import com.milgo.cubby.validator.annotations.UniqueField;
 						second="confirmPassword", 
 						message="The password fields must match")
 		} )
-@UniqueField(fieldName="login", message="Login used!")
+//@UniqueField(fieldName="login", message="Login used!")
 public class UserDetails {
 
 	@Id
@@ -30,6 +30,7 @@ public class UserDetails {
 	
 	//no whitespaces
 	@Size(min = 5, max = 15, message = "Login to short")
+	@Column(unique=true, nullable=false)
 	//@UniqueLogin(message="Login is used!")
 	public String login;
 	

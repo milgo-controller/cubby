@@ -42,11 +42,12 @@ public class UserDetailsDaoImpl implements UserDetailsDao{
 
 	@Transactional
 	public UserDetails getUserByLogin(String login){
+		
 		List<?> list = sessionFactory.getCurrentSession()
 				.createCriteria(UserDetails.class)
 				.add(Restrictions.eq("login", login)).list();
-		if(list.isEmpty())return null;
-		else return (UserDetails)list.get(0);
+		if(!list.isEmpty())return (UserDetails)list.get(0);
+		return null;
 	}
 	
 	
