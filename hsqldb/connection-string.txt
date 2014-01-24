@@ -1,0 +1,4 @@
+HSQL Database Engine Server
+org.hsqldb.jdbcDriver
+jdbc:hsqldb:hsql://localhost:9001/cubby
+SA
