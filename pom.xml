@@ -175,14 +175,31 @@
 	  <scope>test</scope>
 	</dependency>
 	
-
-	
 	<!-- AOP dependency -->
     <dependency>
     	<groupId>cglib</groupId>
 		<artifactId>cglib</artifactId>
 		<version>2.2</version>
     </dependency>
+    
+    <!-- Spring Security -->
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-core</artifactId>
+		<version>${org.springframework.version}</version>
+	</dependency>
+ 
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-web</artifactId>
+		<version>${org.springframework.version}</version>
+	</dependency>
+ 
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-config</artifactId>
+		<version>${org.springframework.version}</version>
+	</dependency>
 	
 	<dependency>
 	  <groupId>org.mockito</groupId>

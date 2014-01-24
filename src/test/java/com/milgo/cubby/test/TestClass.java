@@ -33,8 +33,9 @@ import org.springframework.web.context.WebApplicationContext;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import com.milgo.cubby.dao.UserDetailsDao;
-import com.milgo.cubby.model.UserDetails;
+import com.milgo.cubby.dao.UserDao;
+import com.milgo.cubby.model.User;
+
 
 @ContextConfiguration(locations = {
 		"file:src/main/webapp/WEB-INF/cubby-servlet.xml", 
@@ -50,7 +51,7 @@ import com.milgo.cubby.model.UserDetails;
 @DatabaseSetup(value="/test-database.xml", type=DatabaseOperation.CLEAN_INSERT)
 public class TestClass {
 	
-	@Autowired private UserDetailsDao userDetailsDao;
+	@Autowired private UserDao userDao;
 	@Autowired private WebApplicationContext wac;
 	@Autowired private Validator validator;
 	@Autowired private DataSource dataSource;
@@ -83,7 +84,7 @@ public class TestClass {
 	
 	@Test
 	public void testAddUser() throws Exception{
-		UserDetails user = new UserDetails();
+		User user = new User();
 		user.setId(1);
 		user.setLogin("testlogin123");
 		user.setPassword("testpassword");
@@ -98,16 +99,16 @@ public class TestClass {
 	//przypomnij sobie o opensession w hibernate
 	// @Test
 	public void isAddingAndRemovingUser(){
-		UserDetails user = new UserDetails();
+		User user = new User();
 		user.setLogin("testlogin");
 		user.setPassword("testpassword");
 		user.setConfirmPassword(user.getPassword());
-		userDetailsDao.addUser(user);
-		UserDetails user2 = userDetailsDao.getUserByLogin("testlogin");
+		userDao.addUser(user);
+		User user2 = userDao.getUserByLogin("testlogin");
 		assertTrue(user2 != null);
 		assertTrue(user2.getLogin().endsWith("testlogin"));
-		userDetailsDao.removeUser(user2);
-		UserDetails user3 = userDetailsDao.getUserByLogin("testlogin");
+		userDao.removeUser(user2);
+		User user3 = userDao.getUserByLogin("testlogin");
 		assertTrue(user3 == null);
 	}
 	//dodanie uzytkownika o tej samej nazwie
@@ -116,11 +117,11 @@ public class TestClass {
 	//@Test(expected=ConstraintViolationException.class)
 	//@Test
 	public void isConfirmPasswordConstraintValidation(){
-		UserDetails user = new UserDetails();
+		User user = new User();
 		user.setLogin("testlogin");
 		user.setPassword("testpassword");
 		//userDetailsDao.addUser(user);
-		Set<ConstraintViolation<UserDetails>> violations = validator.validate(user);
+		Set<ConstraintViolation<User>> violations = validator.validate(user);
 		assertTrue("Expected violation error found", !violations.isEmpty());
 		System.out.println(violations.iterator().next().getMessage());
 	    assertTrue(violations.iterator().next().getMessage().equals("Unique login violation"));
@@ -129,17 +130,17 @@ public class TestClass {
 	//@Test(expected=ConstraintViolationException.class)
 //	@Test
 	public void isUniqueLoginConstraintValidation(){
-		UserDetails user = new UserDetails();
+		User user = new User();
 		user.setLogin("testlogin");
 		user.setPassword("testpassword");
-		userDetailsDao.addUser(user);
+		userDao.addUser(user);
 		
 		try{
-			userDetailsDao.addUser(user);//?
+			userDao.addUser(user);//?
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
-		Set<ConstraintViolation<UserDetails>> constraintViolatios =
+		Set<ConstraintViolation<User>> constraintViolatios =
 				validator.validate(user);
 	    assertTrue(1 == constraintViolatios.size());
 	    assertTrue(constraintViolatios.iterator().next().getMessage().equals("Unique login violation"));

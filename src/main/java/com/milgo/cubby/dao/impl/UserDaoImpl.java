@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.milgo.cubby.dao.UserDetailsDao;
-import com.milgo.cubby.model.UserDetails;
+import com.milgo.cubby.dao.UserDao;
+import com.milgo.cubby.model.User;
 
 @Repository
-public class UserDetailsDaoImpl implements UserDetailsDao{
+public class UserDaoImpl implements UserDao{
 
 	@Autowired
 	public SessionFactory sessionFactory;
@@ -23,13 +23,13 @@ public class UserDetailsDaoImpl implements UserDetailsDao{
 	}
 
 	@Transactional
-	public void addUser(UserDetails userDetails) {
-		getCurrentSession().save(userDetails);	
+	public void addUser(User user) {
+		getCurrentSession().save(user);	
 	}
 	
 	@Transactional
-	public void removeUser(UserDetails userDetails) {
-		getCurrentSession().delete(userDetails);
+	public void removeUser(User user) {
+		getCurrentSession().delete(user);
 	}
 
 	public SessionFactory getSessionFactory() {
@@ -41,14 +41,25 @@ public class UserDetailsDaoImpl implements UserDetailsDao{
 	}
 
 	@Transactional
-	public UserDetails getUserByLogin(String login){
+	public User getUserByLogin(String login){
 		
 		List<?> list = sessionFactory.getCurrentSession()
-				.createCriteria(UserDetails.class)
+				.createCriteria(User.class)
 				.add(Restrictions.eq("login", login)).list();
-		if(!list.isEmpty())return (UserDetails)list.get(0);
+		if(!list.isEmpty())return (User)list.get(0);
 		return null;
 	}
-	
+
+	@Transactional
+	public boolean isLoginUsed(String login) {
+		User user = getUserByLogin(login);
+		return (user!=null);
+	}
+
+	@Transactional
+	public List<?> getAllUsers() {
+		return sessionFactory.getCurrentSession()
+				.createCriteria(User.class).list();
+	}
 	
 }

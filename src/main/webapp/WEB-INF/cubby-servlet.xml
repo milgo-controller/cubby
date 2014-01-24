@@ -36,9 +36,13 @@
 	<property name="dataSource" ref="dataSource" />
 	<property name="annotatedClasses">
 		<list>
-			<value>com.milgo.cubby.bo.impl.UserDetailsBoImpl</value>
-			<value>com.milgo.cubby.dao.impl.UserDetailsDaoImpl</value>
-			<value>com.milgo.cubby.model.UserDetails</value>
+			<value>com.milgo.cubby.bo.impl.UserBoImpl</value>
+			<value>com.milgo.cubby.dao.impl.UserDaoImpl</value>
+			<value>com.milgo.cubby.model.User</value>
+			<value>com.milgo.cubby.bo.impl.RoleBoImpl</value>
+			<value>com.milgo.cubby.dao.impl.RoleDaoImpl</value>
+			<value>com.milgo.cubby.model.Role</value>		
+			<value>com.milgo.cubby.model.Address</value>
 		</list>
 	</property>
 	<property name="hibernateProperties">
@@ -48,6 +52,9 @@
 		</props>
 	</property>
 </bean>
+
+<bean id="customAuthenticationSuccessHandler"
+        class="com.milgo.cubby.security.CustomAuthenticationSuccessHandler" />
 
 <bean id="txManager"
     class="org.springframework.orm.hibernate3.HibernateTransactionManager">
