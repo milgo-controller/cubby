@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page isELIgnored ="false" %> 
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
+<%@ page isELIgnored ="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"  %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Register</title>
+<title>Edit user</title>
 </head>
 <style>
 .error {
@@ -15,11 +17,20 @@
 </style>
 <body>
 
+<div align="center">
+<sec:authorize  ifAllGranted="ROLE_ANONYMOUS">
 <h2>Register</h2>
+</sec:authorize>
+
+<sec:authorize ifAnyGranted="ROLE_USER, ROLE_ADMIN, ROLE_MODERATOR">
+<h2>User details ${user.login} ${user.id} </h2>
+</sec:authorize>
+
 
 <sf:form method="POST" modelAttribute="user" >
 	<fieldset>
 		<table>
+			<sec:authorize ifAllGranted="ROLE_ANONYMOUS">
 			<tr>
 				<th><label for="user_login">Login</label></th>
 				<td><sf:input path="login" id="user_login" size="15"/></td>
@@ -35,6 +46,8 @@
 				<td><sf:password path="confirmPassword" id="user_confirm_pass" size="15" showPassword="true"/></td>
 				<td><sf:errors path="confirmPassword" cssClass="error" /></td>
 			</tr>
+			</sec:authorize>
+			
 			<tr>
 				<th><label for="user_email">Email</label></th>
 				<td><sf:input path="email" id="user_email" size="15"/></td>
@@ -70,13 +83,32 @@
 				<td><sf:input path="address.city" id="user_city" size="15"/></td>
 				<td><sf:errors path="address.city" cssClass="error" /></td>
 			</tr>
+			
+			<sec:authorize ifAnyGranted="ROLE_ADMIN">
+			<tr>
+				<th><label for="user_enabled">Enabled</label></th>
+				<td><sf:checkbox path="enabled" id="user_enabled" value="1"/></td>
+				<td><sf:errors path="enabled" cssClass="error" /></td>
+			</tr>
+			<tr>
+				<th><label for="user_role">Role</label></th>
+				<td>
+					<sf:select path="roleName" id="user_role" >
+						<sf:options items="${user.roleNames}" /> 
+					</sf:select>
+				</td>
+				<td><sf:errors path="roleName" cssClass="error" /></td>
+			</tr>
+			</sec:authorize>
+			
 			<tr>
 				<th></th>
-				<td><input name="commit" type="submit" value="Create Account"/></td>
+				<td><input name="commit" type="submit" value="Submit"/></td>
 			</tr>
 		</table>
 	</fieldset>
 </sf:form>
+</div>
 
 </body>
 </html>

@@ -175,6 +175,13 @@
 	  <scope>test</scope>
 	</dependency>
 	
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-taglibs</artifactId>
+		<version>${org.springframework.version}</version>
+	</dependency>
+            
+	
 	<!-- AOP dependency -->
     <dependency>
     	<groupId>cglib</groupId>

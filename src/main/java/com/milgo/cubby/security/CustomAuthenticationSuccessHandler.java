@@ -42,6 +42,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     protected String determineTargetUrl(Authentication authentication) {
         boolean isUser = false;
         boolean isAdmin = false;
+        boolean isModerator = false;
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
             if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
@@ -50,12 +51,15 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
                 isAdmin = true;
                 break;
+            } else if (grantedAuthority.getAuthority().equals("ROLE_MODERATOR")) {
+            	isModerator = true;
+                break;
             }
         }
 
         if (isUser) {
             return "/home";
-        } else if (isAdmin) {
+        } else if (isAdmin || isModerator) {
             return "/admin";
         } else {
             throw new IllegalStateException();

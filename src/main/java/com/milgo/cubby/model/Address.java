@@ -31,8 +31,7 @@ public class Address {
 	}
 
 	public void setCity(String city) {
-		if(city != null){
-			System.out.println(city);
+		if(city != null){			
 			if(city.length() > 20){
 				this.city = city.substring(0, 20);
 				return;

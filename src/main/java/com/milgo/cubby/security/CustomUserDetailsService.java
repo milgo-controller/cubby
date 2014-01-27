@@ -43,26 +43,27 @@ public class CustomUserDetailsService implements UserDetailsService {
 				accountNonExpired,
 				credentialsNonExpired,
 				accountNonLocked,
-				getAuthorities(domainUser.getRole().getId()));
+				getAuthorities(domainUser.getRole().getRoleName()));
 	}
 
-    public Collection<SimpleGrantedAuthority> getAuthorities(Integer role) {
+    public Collection<SimpleGrantedAuthority> getAuthorities(String role) {
         List<SimpleGrantedAuthority> authList = getGrantedAuthorities(getRoles(role));
         return authList;
     }
 
-    public List<String> getRoles(Integer role) {
+    public List<String> getRoles(String role) {
 
         List<String> roles = new ArrayList<String>();
 
-        if (role.intValue() == 1) {
+        if (role.compareTo("ADMIN") == 0) {
             roles.add("ROLE_MODERATOR");
             roles.add("ROLE_ADMIN");
-        }else if (role.intValue() == 2) {
+        }else if (role.compareTo("MODERATOR") == 0) {
             roles.add("ROLE_MODERATOR");
-        }else if (role.intValue() == 3) {
+        }else if (role.compareTo("USER") == 0) {
             roles.add("ROLE_USER");
         }
+        else roles.add("ROLE_ANONYMOUS");
         return roles;
     }
 

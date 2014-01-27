@@ -4,12 +4,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome to Cubby</title>
+<title>Welcome</title>
+
+
+<style type="text/css">
+
+a {font-size:20px; text-decoration:none}
+
+</style>
 </head>
 <body>
-<h2>Welcome to Cubby!</h2>
-
-<a href="login">login</a> </br>
-<a href="register">register</a>
+<div align="center">
+<h2>Welcome!</h2>
+<a href="login">Login</a> </br>
+<a href="register">Register</a>
+</div>
 </body>
 </html>

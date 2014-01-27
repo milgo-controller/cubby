@@ -1,6 +1,9 @@
 package com.milgo.cubby.model;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,7 +40,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID", unique=true, nullable=false)
-	public Integer Id;
+	public Integer id;
 
 	@Size(min = 5, max = 15, message = "Wrong login length (5 to 15 letters)")
 	@Column(name="LOGIN", unique=true, nullable=false)
@@ -56,13 +59,12 @@ public class User {
 	public String email;
 		
 	@Column(name="ENABLED")
-	public int enabled;
+	public Integer enabled;
 
 	@NotNull
 	@Size(min=1, message="Enter your first name!")
 	@Column(name="FIRSTNAME")
 	public String firstName;
-
 
 	@NotNull
 	@Size(min=1, message="Enter your last name!")
@@ -79,11 +81,20 @@ public class User {
 	@Valid
 	public Address address;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.PERSIST)
 	@JoinTable(name="USER_ROLES",
 			joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
 			inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
 	public Role role;
+	
+	/*
+	 * Used only to work with form
+	 */
+	@Transient
+	public String roleName;
+	@Transient
+	public HashMap<String,String> roleNames;
+	
 	
 	public User(){
 		setAddress(new Address());
@@ -98,10 +109,10 @@ public class User {
 	}
 	
 	public Integer getId() {
-		return Id;
+		return id;
 	}
 	public void setId(Integer id) {
-		Id = id;
+		this.id = id;
 	}
 	
 	public String getLogin() {
@@ -128,11 +139,11 @@ public class User {
 		this.confirmPassword = confirmPassword;
 	}
 	
-	public int getEnabled() {
+	public Integer getEnabled() {
 		return enabled;
 	}
 	
-	public void setEnabled(int enabled) {
+	public void setEnabled(Integer enabled) {
 		this.enabled = enabled;
 	}
 
@@ -174,6 +185,22 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public HashMap<String,String> getRoleNames() {
+		return roleNames;
+	}
+
+	public void setRoleNames(HashMap<String,String>  roleNames) {
+		this.roleNames = roleNames;
 	}
 	
 }

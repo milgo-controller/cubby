@@ -22,31 +22,31 @@ public class Role {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID", nullable=false, unique=true)
-	private int id;
+	private Integer id;
 	
 	@Column(name="ROLE", unique=true, nullable=false)
-	private String role;
+	private String roleName;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.PERSIST)
 	@JoinTable(name="USER_ROLES", 
-		joinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")},
-		inverseJoinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")})
+		joinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")}/*,
+		inverseJoinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")}*/)
 	private List<User> userList;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getRole() {
-		return role;
+	public String getRoleName() {
+		return roleName;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
 	public List<User> getUserList() {

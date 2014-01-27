@@ -8,6 +8,7 @@
 </head>
 <body>
 <H1>Registration success!</H1>
-<a href="login">Login</a>
+(<a href="login">Login</a>)
+(<a href="register">Register</a>)
 </body>
 </html>

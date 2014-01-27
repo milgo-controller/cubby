@@ -2,6 +2,7 @@ package com.milgo.cubby.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -11,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.milgo.cubby.dao.RoleDao;
 import com.milgo.cubby.model.Role;
-import com.milgo.cubby.model.User;
 
 @Repository
 public class RoleDaoImpl implements RoleDao{
@@ -37,9 +37,15 @@ public class RoleDaoImpl implements RoleDao{
 	public Role getRoleByName(String name) {
 		List<?> list = sessionFactory.getCurrentSession()
 				.createCriteria(Role.class)
-				.add(Restrictions.eq("role", name)).list();
+				.add(Restrictions.eq("roleName", name)).list();
 		if(!list.isEmpty())return (Role)list.get(0);
 		return null;
+	}
+	
+	@Transactional
+	public List<?> getAllRoles() {
+		return sessionFactory.getCurrentSession()
+				.createCriteria(Role.class).list();
 	}
 
 	public SessionFactory getSessionFactory() {

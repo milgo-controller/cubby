@@ -29,10 +29,12 @@
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-webmvc/3.2.0.RELEASE/spring-webmvc-3.2.0.RELEASE.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-webmvc-portlet/3.2.0.RELEASE/spring-webmvc-portlet-3.2.0.RELEASE.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-test/3.2.0.RELEASE/spring-test-3.2.0.RELEASE.jar"/>
-  <classpathentry kind="var" path="M2_REPO/cglib/cglib/2.2/cglib-2.2.jar"/>
-  <classpathentry kind="var" path="M2_REPO/asm/asm/3.1/asm-3.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-taglibs/3.2.0.RELEASE/spring-security-taglibs-3.2.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-acl/3.2.0.RELEASE/spring-security-acl-3.2.0.RELEASE.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-core/3.2.0.RELEASE/spring-security-core-3.2.0.RELEASE.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-web/3.2.0.RELEASE/spring-security-web-3.2.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/cglib/cglib/2.2/cglib-2.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/asm/asm/3.1/asm-3.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-config/3.2.0.RELEASE/spring-security-config-3.2.0.RELEASE.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/mockito/mockito-all/1.9.5/mockito-all-1.9.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-validator/5.0.1.Final/hibernate-validator-5.0.1.Final.jar"/>

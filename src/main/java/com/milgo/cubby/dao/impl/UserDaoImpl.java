@@ -28,6 +28,11 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	@Transactional
+	public void modifyUser(User user) {
+		getCurrentSession().update(user);	
+	}
+	
+	@Transactional
 	public void removeUser(User user) {
 		getCurrentSession().delete(user);
 	}
@@ -40,9 +45,8 @@ public class UserDaoImpl implements UserDao{
 		this.sessionFactory = sessionFactory;
 	}
 
-	@Transactional
+	@Transactional(readOnly=false)
 	public User getUserByLogin(String login){
-		
 		List<?> list = sessionFactory.getCurrentSession()
 				.createCriteria(User.class)
 				.add(Restrictions.eq("login", login)).list();
