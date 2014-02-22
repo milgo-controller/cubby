@@ -1,5 +1,7 @@
 package com.milgo.cubby.bo.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,19 @@ public class UserBoImpl implements UserBo{
 
 	public User getUserByLogin(String login) {
 		return userDao.getUserByLogin(login);
+	}
+
+	public void modifyUser(User user) {
+		user.setConfirmPassword(user.getPassword());
+		userDao.modifyUser(user);	
+	}
+
+	public List<?> getAllUsers() {
+		return userDao.getAllUsers();
+	}
+
+	public boolean isLoginUsed(String login) {
+		return userDao.isLoginUsed(login);
 	}
 
 }

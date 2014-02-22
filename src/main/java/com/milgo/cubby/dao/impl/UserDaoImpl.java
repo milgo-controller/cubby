@@ -1,6 +1,8 @@
 package com.milgo.cubby.dao.impl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.milgo.cubby.dao.UserDao;
 import com.milgo.cubby.model.User;
+import com.milgo.cubby.model.UserTrainings;
 
 @Repository
 public class UserDaoImpl implements UserDao{
@@ -34,6 +37,14 @@ public class UserDaoImpl implements UserDao{
 	
 	@Transactional
 	public void removeUser(User user) {
+
+		//System.out.println("lalala");
+		Set<UserTrainings> trainSet = user.getUserTrainings();
+		System.out.println(trainSet.size());
+		for(UserTrainings t: trainSet){
+			System.out.println("gogogo");
+			getCurrentSession().delete(t);
+		}
 		getCurrentSession().delete(user);
 	}
 
@@ -47,11 +58,10 @@ public class UserDaoImpl implements UserDao{
 
 	@Transactional(readOnly=false)
 	public User getUserByLogin(String login){
-		List<?> list = sessionFactory.getCurrentSession()
+		return (User)sessionFactory.getCurrentSession()
 				.createCriteria(User.class)
-				.add(Restrictions.eq("login", login)).list();
-		if(!list.isEmpty())return (User)list.get(0);
-		return null;
+				.add(Restrictions.eq("login", login)).uniqueResult();
+		
 	}
 
 	@Transactional

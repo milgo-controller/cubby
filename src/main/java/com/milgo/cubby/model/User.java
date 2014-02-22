@@ -2,18 +2,20 @@ package com.milgo.cubby.model;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -87,14 +89,25 @@ public class User {
 			inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
 	public Role role;
 	
+	
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="pk.user", cascade=CascadeType.ALL)
+	public Set<UserTrainings> userTrainings = new HashSet<UserTrainings>(0);
+	
+	public Set<UserTrainings> getUserTrainings() {
+		return userTrainings;
+	}
+
+	public void setUserTrainings(Set<UserTrainings> userTrainings) {
+		this.userTrainings = userTrainings;
+	}
+
 	/*
 	 * Used only to work with form
 	 */
 	@Transient
 	public String roleName;
 	@Transient
-	public HashMap<String,String> roleNames;
-	
+	public HashMap<String, String> roleNames;	
 	
 	public User(){
 		setAddress(new Address());

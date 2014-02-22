@@ -18,36 +18,12 @@
 <body>
 
 <div align="center">
-<sec:authorize  ifAllGranted="ROLE_ANONYMOUS">
-<h2>Register</h2>
-</sec:authorize>
 
-<sec:authorize ifAnyGranted="ROLE_USER, ROLE_ADMIN, ROLE_MODERATOR">
-<h2>User details ${user.login} ${user.id} </h2>
-</sec:authorize>
-
+<h2>User details ${user.login}</h2>
 
 <sf:form method="POST" modelAttribute="user" >
 	<fieldset>
 		<table>
-			<sec:authorize ifAllGranted="ROLE_ANONYMOUS">
-			<tr>
-				<th><label for="user_login">Login</label></th>
-				<td><sf:input path="login" id="user_login" size="15"/></td>
-				<td><sf:errors path="login" cssClass="error" /></td>
-			</tr>
-			<tr>
-				<th><label for="user_pass">Password</label></th>
-				<td><sf:password path="password" id="user_pass" size="15" showPassword="true"/></td>
-				<td><sf:errors path="password" cssClass="error" /></td>
-			</tr>
-			<tr>
-				<th><label for="user_confirm_pass">Confirm Password</label></th>
-				<td><sf:password path="confirmPassword" id="user_confirm_pass" size="15" showPassword="true"/></td>
-				<td><sf:errors path="confirmPassword" cssClass="error" /></td>
-			</tr>
-			</sec:authorize>
-			
 			<tr>
 				<th><label for="user_email">Email</label></th>
 				<td><sf:input path="email" id="user_email" size="15"/></td>
@@ -84,7 +60,7 @@
 				<td><sf:errors path="address.city" cssClass="error" /></td>
 			</tr>
 			
-			<sec:authorize ifAnyGranted="ROLE_ADMIN">
+			<sec:authorize ifAnyGranted="ROLE_ADMIN, ROLE_MODERATOR">
 			<tr>
 				<th><label for="user_enabled">Enabled</label></th>
 				<td><sf:checkbox path="enabled" id="user_enabled" value="1"/></td>

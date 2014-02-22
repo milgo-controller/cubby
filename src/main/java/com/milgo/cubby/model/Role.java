@@ -14,11 +14,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ROLES"/*, uniqueConstraints = {
-@UniqueConstraint(columnNames = "ROLE") //how to set message?
-}*/)
+@Table(name="ROLES")
 public class Role {
-
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID", nullable=false, unique=true)

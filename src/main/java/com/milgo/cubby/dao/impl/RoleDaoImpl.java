@@ -2,7 +2,6 @@ package com.milgo.cubby.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -16,8 +15,16 @@ import com.milgo.cubby.model.Role;
 @Repository
 public class RoleDaoImpl implements RoleDao{
 
+	public static final String ROLE_ADMIN = null;
+	public static final String ROLE_MODERATOR = null;
+	public static final String ROLE_ANONYMOUS = null;
+	
 	@Autowired
 	public SessionFactory sessionFactory;
+	
+	public RoleDaoImpl(){
+		System.out.println("you can take role names here");
+	}
 	
 	private Session getCurrentSession(){
 		return sessionFactory.getCurrentSession();

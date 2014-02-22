@@ -1,5 +1,7 @@
 package com.milgo.cubby.bo.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,7 @@ public class RoleBoImpl implements RoleBo{
 	}
 	
 	public void addRole(Role role) {
-		// TODO Auto-generated method stub
-		
+		roleDao.addRole(role);
 	}
 
 	public void removeRole(Role role) {
@@ -35,9 +36,13 @@ public class RoleBoImpl implements RoleBo{
 	}
 
 	@Override
-	public Role getRoleIdByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public Role getRoleByName(String name) {
+		return roleDao.getRoleByName(name);
+	}
+
+	@Override
+	public List<?> getAllRoles() {
+		return roleDao.getAllRoles();
 	}
 
 }

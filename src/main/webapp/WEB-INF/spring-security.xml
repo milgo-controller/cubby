@@ -8,7 +8,7 @@
  
 	<http auto-config="true">	
 		<intercept-url pattern="/home" access="ROLE_USER" />
-		<intercept-url pattern="/register" access="ROLE_ANONYMOUS"  />
+		<!-- <intercept-url pattern="/register" access="ROLE_ANONYMOUS"  /> -->
 		<intercept-url pattern="/admin*" access="ROLE_ADMIN, ROLE_MODERATOR" />
 		<form-login login-page="/login" default-target-url="login"
 			authentication-failure-url="/loginfailed" 
