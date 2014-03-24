@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -26,8 +27,8 @@ import com.milgo.cubby.bo.UserBo;
 import com.milgo.cubby.model.Role;
 import com.milgo.cubby.model.Training;
 import com.milgo.cubby.model.User;
-import com.milgo.cubby.model.UserTrainings;
-import com.milgo.cubby.model.UserTrainingsId;
+import com.milgo.cubby.model.UserTraining;
+import com.milgo.cubby.model.UserTrainingId;
 
 
 @Controller
@@ -202,10 +203,27 @@ public class MainController {
 	
 	@RequestMapping(value="/home")
 	public String showHomePage(Map<String, Object> model){
-		//user training list
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+	    User loggedUser = userBo.getUserByLogin(name);
+		//user training list
+		List<Training> userTrainings = loggedUser.getTrainings();
+		model.put("userTrainings", userTrainings);
 		//available list
 		List<?> trList =  trainingBo.getAllTrainings();
+		Iterator<?> iterator = userTrainings.iterator();
+
+	    while (iterator.hasNext()) {
+	    	Training t = (Training)iterator.next();
+	    	Iterator<?> i = trList.iterator();
+	    	while (i.hasNext()){
+	    		Training tr = (Training)i.next();
+	    		if(t.getId() == tr.getId())
+	    			i.remove();
+	    	}
+	    }
+		
 		model.put("trainingsList", trList);
 		return "home";
 	}
@@ -221,7 +239,7 @@ public class MainController {
 		Training training = trainingBo.getTrainingById(id);
 		System.out.println(training.getName());
 		
-		UserTrainings userTraining = new UserTrainings();
+		UserTraining userTraining = new UserTraining();
 		userTraining.setActive(0);
 		userTraining.setTraining(training);
 		userTraining.setUser(loggedUser);
@@ -232,7 +250,25 @@ public class MainController {
 		
 		//List<?> trList =  trainingBo.getAllTrainings();
 		//model.put("trainingsList", trList);
-		return "home";
+		return "redirect:/home";
+	}
+	
+	@RequestMapping(value="/home/training/quit/{id}", method=RequestMethod.GET)
+	public String homeTrainingQuit(@PathVariable Integer id){
+		System.out.println("quit");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+	    User loggedUser = userBo.getUserByLogin(name);
+	    
+	    Iterator<?> i = loggedUser.getUserTrainings().iterator();
+	    while(i.hasNext()){
+	    	UserTraining ut = (UserTraining)i.next();
+	    	if(ut.getPk().getTraining().getId() == id){
+	    		userBo.removeUserTraining(loggedUser, ut);
+	    	}
+	    }
+	    userBo.modifyUser(loggedUser);
+		return "redirect:/home";
 	}
 	
 	@RequestMapping({"/register"})

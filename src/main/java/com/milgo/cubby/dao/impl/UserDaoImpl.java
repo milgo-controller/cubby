@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.milgo.cubby.dao.UserDao;
 import com.milgo.cubby.model.User;
-import com.milgo.cubby.model.UserTrainings;
+import com.milgo.cubby.model.UserTraining;
 
 @Repository
 public class UserDaoImpl implements UserDao{
@@ -39,10 +39,10 @@ public class UserDaoImpl implements UserDao{
 	public void removeUser(User user) {
 
 		//System.out.println("lalala");
-		Set<UserTrainings> trainSet = user.getUserTrainings();
+		Set<UserTraining> trainSet = user.getUserTrainings();
 		System.out.println(trainSet.size());
-		for(UserTrainings t: trainSet){
-			System.out.println("gogogo");
+		for(UserTraining t: trainSet){
+			//System.out.println("gogogo");
 			getCurrentSession().delete(t);
 		}
 		getCurrentSession().delete(user);
@@ -74,6 +74,20 @@ public class UserDaoImpl implements UserDao{
 	public List<?> getAllUsers() {
 		return sessionFactory.getCurrentSession()
 				.createCriteria(User.class).list();
+	}
+
+	@Transactional
+	public void removeUserTraining(User user, UserTraining userTraining) {
+		Set<UserTraining> trainSet = user.getUserTrainings();
+		
+		for(UserTraining t: trainSet){
+			if(t.getTraining().getId() == userTraining.getTraining().getId()
+					&& t.getUser().getId() == userTraining.getUser().getId()){
+				trainSet.remove(t);
+				getCurrentSession().delete(t);
+				break;
+			}
+		}
 	}
 	
 }

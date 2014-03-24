@@ -18,10 +18,45 @@
 <h1>Welcome <sec:authentication property="principal.username"/></h1>(<a href='<c:url value="j_spring_security_logout" />' >Logout</a>)
 </div>
 
-<!-- TRAININGS LIST -->
+<!-- ALL USER TRAININGS -->
 <table cellpadding="5" cellspacing="0">
 <thead>
-	<tr><td colspan="6"><div align="center"><h3>Available trainings</h3></div></td></tr>
+	<tr><td colspan="6"><div align="center"><h3>Your trainings</h3></div></td></tr>
+	<tr>
+		<td><strong>Name</strong></td>
+		<td><strong>Description</strong></td>
+		<td><strong>Cost</strong></td>
+		<td><strong>Online</strong></td>		
+		<td colspan="2"><strong>Commands</strong></td>
+	</tr>
+</thead>
+
+<tbody>
+	<c:forEach var="userTraining" items="${userTrainings}">
+		<tr>
+			<td>${userTraining.name}</td>
+			<td>${userTraining.description}</td>
+			<td>${userTraining.cost}</td>			
+			<td>${userTraining.online}</td>
+			<td><a href="home/training/quit/${userTraining.id}">Quit</a></td>
+			<td>Quit</td>
+		</tr>
+	</c:forEach>
+</tbody>
+
+<tfoot>
+	<tr>
+	
+	</tr>
+</tfoot>
+
+</table>
+
+
+<!-- ALL TRAININGS THAT USER CAN JOIN -->
+<table cellpadding="5" cellspacing="0">
+<thead>
+	<tr><td colspan="6"><div align="center"><h3>Other trainings</h3></div></td></tr>
 	<tr>
 		<td><strong>Name</strong></td>
 		<td><strong>Description</strong></td>

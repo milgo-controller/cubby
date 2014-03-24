@@ -1,5 +1,8 @@
 package com.milgo.cubby.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Iterator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
@@ -91,13 +94,23 @@ public class User {
 	
 	
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="pk.user", cascade=CascadeType.ALL)
-	public Set<UserTrainings> userTrainings = new HashSet<UserTrainings>(0);
+	public Set<UserTraining> userTrainings = new HashSet<UserTraining>(0);
 	
-	public Set<UserTrainings> getUserTrainings() {
+	public Set<UserTraining> getUserTrainings() {
 		return userTrainings;
 	}
+	
+	public List<Training> getTrainings(){
+		ArrayList<Training> t = new ArrayList<Training>();
+		Set<?> ut = getUserTrainings();
+		Iterator<?> i = ut.iterator();
+		while (i.hasNext()) {
+			t.add(((UserTraining)i.next()).getTraining());
+		}
+		return t;
+	}
 
-	public void setUserTrainings(Set<UserTrainings> userTrainings) {
+	public void setUserTrainings(Set<UserTraining> userTrainings) {
 		this.userTrainings = userTrainings;
 	}
 

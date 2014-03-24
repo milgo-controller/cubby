@@ -44,8 +44,8 @@
 			<value>com.milgo.cubby.model.Role</value>		
 			<value>com.milgo.cubby.model.Address</value>
 			<value>com.milgo.cubby.model.Training</value>
-			<value>com.milgo.cubby.model.UserTrainings</value>
-			<value>com.milgo.cubby.model.UserTrainingsId</value>
+			<value>com.milgo.cubby.model.UserTraining</value>
+			<value>com.milgo.cubby.model.UserTrainingId</value>
 		</list>
 	</property>
 	<property name="hibernateProperties">

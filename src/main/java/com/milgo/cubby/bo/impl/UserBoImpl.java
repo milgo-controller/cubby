@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.milgo.cubby.bo.UserBo;
 import com.milgo.cubby.dao.UserDao;
+import com.milgo.cubby.model.UserTraining;
 import com.milgo.cubby.model.User;
 
 @Service
@@ -46,6 +47,12 @@ public class UserBoImpl implements UserBo{
 
 	public boolean isLoginUsed(String login) {
 		return userDao.isLoginUsed(login);
+	}
+
+	@Override
+	public void removeUserTraining(User user, UserTraining userTraining) {
+		// TODO Auto-generated method stub
+		userDao.removeUserTraining(user, userTraining);
 	}
 
 }
