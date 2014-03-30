@@ -89,8 +89,8 @@ Admin panel
 			<td>${training.description}</td>
 			<td>${training.cost}</td>			
 			<td>${training.online}</td>
-			<td><a href="<spring:url value="admin/edit/user/${user.login}" />">Edit</a></td>
-			<td><a href="admin/remove/user/${user.login}" onclick="return confirm ('Removing user ${user.login}! Are you sure?');">Remove</a></td>
+			<td><a href="<spring:url value="admin/training/edit/${training.id}" />">Edit</a></td>
+			<td><a href="admin/training/remove/${training.id}" onclick="return confirm ('Removing training ${training.name}! Are you sure?');">Remove</a></td>
 		</tr>
 	</c:forEach>
 </tbody>

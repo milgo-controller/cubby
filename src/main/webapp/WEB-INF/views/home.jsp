@@ -21,7 +21,7 @@
 <!-- ALL USER TRAININGS -->
 <table cellpadding="5" cellspacing="0">
 <thead>
-	<tr><td colspan="6"><div align="center"><h3>Your trainings</h3></div></td></tr>
+	<tr><td colspan="5"><div align="center"><h3>Your trainings</h3></div></td></tr>
 	<tr>
 		<td><strong>Name</strong></td>
 		<td><strong>Description</strong></td>
@@ -39,7 +39,6 @@
 			<td>${userTraining.cost}</td>			
 			<td>${userTraining.online}</td>
 			<td><a href="home/training/quit/${userTraining.id}">Quit</a></td>
-			<td>Quit</td>
 		</tr>
 	</c:forEach>
 </tbody>
@@ -56,7 +55,7 @@
 <!-- ALL TRAININGS THAT USER CAN JOIN -->
 <table cellpadding="5" cellspacing="0">
 <thead>
-	<tr><td colspan="6"><div align="center"><h3>Other trainings</h3></div></td></tr>
+	<tr><td colspan="5"><div align="center"><h3>Other trainings</h3></div></td></tr>
 	<tr>
 		<td><strong>Name</strong></td>
 		<td><strong>Description</strong></td>
@@ -74,7 +73,6 @@
 			<td>${training.cost}</td>			
 			<td>${training.online}</td>
 			<td><a href="home/training/join/${training.id}">Join</a></td>
-			<td>Quit</td>
 		</tr>
 	</c:forEach>
 </tbody>

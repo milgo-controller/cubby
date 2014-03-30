@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -87,14 +88,14 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/admin/edit/user/{login}", method=RequestMethod.GET)
-	public ModelAndView showAdminEditUser(@PathVariable String login){		
-		ModelAndView mav = new ModelAndView("user_edit");
+	public String showAdminEditUser(@PathVariable String login, Model model){		
+		//ModelAndView mav = new ModelAndView("user_edit");
 		
-		User userForm = userBo.getUserByLogin(login);
+		User user = userBo.getUserByLogin(login);
 		
 		List<?> roles = roleBo.getAllRoles();
 
-		HashMap<String, String> roleNames = new LinkedHashMap<String,String>();
+		HashMap<String, String> roleNames = new LinkedHashMap<String, String>();
 		
 		for(Object role: roles){
 			String roleName = ((Role)role).getRoleName();
@@ -102,10 +103,23 @@ public class MainController {
 			roleNames.put(roleName, roleName);
 		}
 		
-		userForm.setRoleName(userForm.getRole().getRoleName());
-		userForm.setRoleNames(roleNames);
-		mav.addObject("user", userForm);
-		return mav;
+		user.setRoleName(user.getRole().getRoleName());
+		user.setRoleNames(roleNames);
+		
+		model.addAttribute("user", user);
+		//Map<String, Object> model = new HashMap<String, Object>();
+		//model.put("user", user);
+		
+		//mav.addObject("user", user);
+		
+		//user training list
+		List<Training> userTrainings = user.getTrainings();
+		model.addAttribute("userTrainings", userTrainings);
+		//mav.addObject("userTrainings", userTrainings);
+		//model.put("userTrainings", userTrainings);
+		
+		//mav.addObject("model", model);
+		return "user_edit";//mav;
 	}
 	
 	@RequestMapping(value="/admin/edit/user/{login}", method=RequestMethod.POST)
@@ -146,12 +160,14 @@ public class MainController {
 		return "training_edit";
 	}
 	
-	@RequestMapping(value="admin/add/training", method=RequestMethod.POST)
-	public String adminEditTraining(@Valid Training training, BindingResult bindingResult){
-		
+	public int validateTraining(Training training, BindingResult bindingResult)
+	{
 		if(training.getOnline() == null)
 			training.setOnline(0);
 		else training.setOnline(1);
+		
+		if(training.getCost() == null)
+			training.setCost(0);		
 		
 		if(bindingResult.hasErrors())
 		{
@@ -159,29 +175,68 @@ public class MainController {
 		    for (FieldError error : errors) {
 		        System.out.println (error.getObjectName() + " - " + error.getDefaultMessage());
 		    }						    		    		    
-			return "training_edit";
+			return 1;
 		}
 		
 	    if(training.getOnline() == 0){
 	    	if(training.getStartDate() == null){
 	    		bindingResult.rejectValue("startDate", "", "Please enter date of training!");
-	    		return "training_edit";
+	    		return 1;
 	    	}
 	    	
 			if(training.getPlace().isEmpty()){
 				bindingResult.rejectValue("place", "", "Please enter place of training!");
-				return "training_edit";
+				return 1;
 	    	}
 	    }
 	    else{
 	    	if(training.getUrl().isEmpty()){
 				bindingResult.rejectValue("url", "", "Please enter url!");
-				return "redirect:/admin";
+				return 1;//"redirect:/admin";
 	    	}
 	    }
+		return 0;
+	}
+	
+	@RequestMapping(value="admin/add/training", method=RequestMethod.POST)
+	public String adminEditTraining(@Valid Training training, BindingResult bindingResult){
 		
-		trainingBo.addTraining(training);
+		int res = validateTraining(training, bindingResult);
+		if(res > 0){
+			return "training_edit";
+		}
+		else{
+			trainingBo.addTraining(training);
+		}
 		
+		return "redirect:/admin";
+	}
+	
+	@RequestMapping(value="admin/training/edit/{id}", method=RequestMethod.GET)
+	public String adminEditTraining(@PathVariable Integer id, Model model){
+		System.out.println("edit");
+		model.addAttribute("training", trainingBo.getTrainingById(id));
+		return "training_edit";
+	}
+	
+	@RequestMapping(value="admin/training/edit/{id}", method=RequestMethod.POST)
+	public String adminModifyTraining(@PathVariable Integer id, @Valid Training training, BindingResult bindingResult){
+		System.out.println(" modify edit");
+		//model.addAttribute("training", trainingBo.getTrainingById(id));
+		int res = validateTraining(training, bindingResult);
+		if(res > 0){
+			return "training_edit";
+		}
+		else{
+			trainingBo.modifyTraining(training);
+		}
+		
+		return "training_edit";
+	}
+	
+	@RequestMapping(value="admin/training/remove/{id}", method=RequestMethod.GET)
+	public String adminRemoveTraining(@PathVariable Integer id){
+		trainingBo.removeTraining(id);
 		return "redirect:/admin";
 	}
 	
@@ -248,8 +303,6 @@ public class MainController {
 		System.out.println(loggedUser.getUserTrainings().size());
 		userBo.modifyUser(loggedUser);
 		
-		//List<?> trList =  trainingBo.getAllTrainings();
-		//model.put("trainingsList", trList);
 		return "redirect:/home";
 	}
 	
