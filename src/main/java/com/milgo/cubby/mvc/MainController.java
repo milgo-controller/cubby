@@ -29,7 +29,6 @@ import com.milgo.cubby.model.Role;
 import com.milgo.cubby.model.Training;
 import com.milgo.cubby.model.User;
 import com.milgo.cubby.model.UserTraining;
-import com.milgo.cubby.model.UserTrainingId;
 
 
 @Controller
@@ -107,19 +106,11 @@ public class MainController {
 		user.setRoleNames(roleNames);
 		
 		model.addAttribute("user", user);
-		//Map<String, Object> model = new HashMap<String, Object>();
-		//model.put("user", user);
 		
-		//mav.addObject("user", user);
-		
-		//user training list
-		List<Training> userTrainings = user.getTrainings();
+		//usser training list
+		Set<UserTraining> userTrainings = user.getUserTrainings();//getTrainings();
 		model.addAttribute("userTrainings", userTrainings);
-		//mav.addObject("userTrainings", userTrainings);
-		//model.put("userTrainings", userTrainings);
-		
-		//mav.addObject("model", model);
-		return "user_edit";//mav;
+		return "user_edit";
 	}
 	
 	@RequestMapping(value="/admin/edit/user/{login}", method=RequestMethod.POST)
@@ -238,6 +229,40 @@ public class MainController {
 	public String adminRemoveTraining(@PathVariable Integer id){
 		trainingBo.removeTraining(id);
 		return "redirect:/admin";
+	}
+	
+	@RequestMapping(value="admin/edit/user/{login}/training/activate/{id}", method=RequestMethod.GET)
+	public String activateUserTraining(@PathVariable("login") String login, @PathVariable("id") Integer id, Model model)
+	{
+		User user = userBo.getUserByLogin(login);
+
+		Iterator<?> i = user.getUserTrainings().iterator();
+		while(i.hasNext())
+		{
+			UserTraining ut = (UserTraining)i.next();
+			if(ut.getPk().getTraining().getId() == id){
+				ut.setActive(1);
+			}
+		}
+		userBo.modifyUser(user);
+		return "redirect:/admin/edit/user/"+login;
+	}
+	
+	@RequestMapping(value="admin/edit/user/{login}/training/deactivate/{id}", method=RequestMethod.GET)
+	public String deactivateUserTraining(@PathVariable("login") String login, @PathVariable("id") Integer id, Model model)
+	{
+		User user = userBo.getUserByLogin(login);
+
+		Iterator<?> i = user.getUserTrainings().iterator();
+		while(i.hasNext())
+		{
+			UserTraining ut = (UserTraining)i.next();
+			if(ut.getPk().getTraining().getId() == id){
+				ut.setActive(0);
+			}
+		}
+		userBo.modifyUser(user);
+		return "redirect:/admin/edit/user/"+login;
 	}
 	
 	@RequestMapping({"/login"})

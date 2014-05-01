@@ -104,14 +104,20 @@
 		</thead>
 		
 		<tbody>
-			<c:forEach var="training" items="${userTrainings}">
+			<c:forEach var="userTraining" items="${userTrainings}">
 				<tr>
-					<td>${training.name}</td>
-					<td>${training.description}</td>
-					<td>${training.cost}</td>			
-					<td>${training.online}</td>
-					<td><a href="/admin/edit/user/${user.login}/training/activate/${training.id}">Activate</a></td>
-					<td><a href="/admin/edit/user/${user.login}/training/delete/${training.id}">Delete</a></td>
+					<td>${userTraining.training.name}</td>
+					<td>${userTraining.training.description}</td>
+					<td>${userTraining.training.cost}</td>			
+					<td>${userTraining.training.online}</td>
+					<spring:url value="/admin/edit/user" var="editUrl"/>
+					<c:if test="${userTraining.active == 1}">
+						<td><a href="${editUrl}/${user.login}/training/deactivate/${userTraining.training.id}">Deactivate</a></td>
+					</c:if>
+					<c:if test="${userTraining.active == 0}">
+						<td><a href="${editUrl}/${user.login}/training/activate/${userTraining.training.id}">Activate</a></td>
+					</c:if>
+					<td><a href="${editUrl}/${user.login}/training/delete/${userTraining.training.id}">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
