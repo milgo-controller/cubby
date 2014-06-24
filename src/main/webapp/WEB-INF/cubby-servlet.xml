@@ -27,7 +27,7 @@
 
 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 	<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-	<property name="url" value="jdbc:hsqldb:hsql://localhost:9001/cubby" />
+	<property name="url" value="jdbc:hsqldb:hsql://localhost/testdb" />
 	<property name="username" value="SA" />
 	<property name="password" value="" />
 </bean>
