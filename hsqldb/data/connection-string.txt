@@ -1,0 +1,4 @@
+HSQL Database Engine In-Memory
+org.hsqldb.jdbcDriver
+jdbc:hsqldb:hsql://localhost/testdb
+SA
