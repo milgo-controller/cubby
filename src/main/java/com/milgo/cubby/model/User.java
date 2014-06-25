@@ -40,7 +40,7 @@ import com.milgo.cubby.validator.annotations.FieldMatch;
 
 @Entity
 @Cacheable
-@Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Table(name="USERS")
 @FieldMatch.List(
 		value = { 
@@ -73,6 +73,17 @@ public class User implements UserDetails{
 		
 	@Column(name="ENABLED")
 	public Integer enabled;
+
+	@Transient
+	public String enabledCheckbox;
+	
+	public String getEnabledCheckbox() {
+		return enabledCheckbox;
+	}
+
+	public void setEnabledCheckbox(String enabledCheckbox) {
+		this.enabledCheckbox = enabledCheckbox;
+	}
 
 	@NotNull
 	@Size(min=1, message="Enter your first name!")
@@ -181,7 +192,7 @@ public class User implements UserDetails{
 	}
 	
 	public void setEnabled(Integer enabled) {
-		this.enabled = enabled;
+		this.enabled = new Integer(enabled);
 	}
 
 	public String getFirstName() {

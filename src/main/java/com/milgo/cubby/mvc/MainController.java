@@ -157,6 +157,9 @@ public class MainController {
 			roleNames.put(roleName, roleName);
 		}
 		
+		if(user.getEnabled() == 1)user.setEnabledCheckbox("enabled");
+		else user.setEnabledCheckbox(null);
+		
 		/* zapisujemy u¿ytkownikowi nazwê jego roli */
 		user.setRoleName(user.getRole().getRoleName());
 		
@@ -210,8 +213,9 @@ public class MainController {
 		updatedUser.setLastName(userForm.getLastName());
 		updatedUser.setBirthDate(userForm.getBirthDate());
 		
+		System.out.println(userForm.getEnabledCheckbox());
 		/* Odblokowanie/zablokowanie u¿ytkownika do korzystania z mo¿liwoœci logowania */
-		if(userForm.getEnabled() == null)
+		if(userForm.getEnabledCheckbox() == null)
 			updatedUser.setEnabled(0);
 		else updatedUser.setEnabled(1);
 			
@@ -637,7 +641,7 @@ public class MainController {
 		
 		/* Jeœli nie by³o b³êdów nadajemy nowemu u¿ytkownikowi role USER, ustawiamy enable na 0 bo administrator musi potwierdziæ */
 		userForm.setRole(roleBo.getRoleByName("USER"));
-		userForm.setEnabled(0);
+		userForm.setEnabled(1);
 		
 		/* Dodajemy nowego u¿ytkownika do bazy danych */
 		userBo.addUser(userForm);

@@ -66,8 +66,8 @@
 			<sec:authorize ifAnyGranted="ROLE_ADMIN, ROLE_MODERATOR">
 			<tr>
 				<th><label for="user_enabled">Enabled</label></th>
-				<td><sf:checkbox path="enabled" id="user_enabled" value="1"/></td>
-				<td><sf:errors path="enabled" cssClass="error" /></td>
+				<td><sf:checkbox path="enabledCheckbox" id="user_enabled" value="enabled"/></td>
+				<td><sf:errors path="enabledCheckbox" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<th><label for="user_role">Role</label></th>
