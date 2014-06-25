@@ -54,5 +54,7 @@
   <classpathentry kind="var" path="M2_REPO/org/hsqldb/hsqldb/2.3.1/hsqldb-2.3.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/github/springtestdbunit/spring-test-dbunit/1.0.0/spring-test-dbunit-1.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/dbunit/dbunit/2.4.9/dbunit-2.4.9.jar"/>
+  <classpathentry kind="var" path="M2_REPO/net/sf/ehcache/ehcache-core/2.6.9/ehcache-core-2.6.9.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-ehcache/3.6.10.Final/hibernate-ehcache-3.6.10.Final.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-entitymanager/3.6.10.Final/hibernate-entitymanager-3.6.10.Final.jar"/>
 </classpath>
