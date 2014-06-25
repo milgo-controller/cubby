@@ -2,6 +2,7 @@ package com.milgo.cubby.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -52,7 +53,9 @@ public class RoleDaoImpl implements RoleDao{
 	@Transactional
 	public List<?> getAllRoles() {
 		return sessionFactory.getCurrentSession()
-				.createCriteria(Role.class).list();
+				.createCriteria(Role.class)
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+				.list();
 	}
 
 	public SessionFactory getSessionFactory() {

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -73,7 +74,9 @@ public class UserDaoImpl implements UserDao{
 	@Transactional
 	public List<?> getAllUsers() {
 		return sessionFactory.getCurrentSession()
-				.createCriteria(User.class).list();
+				.createCriteria(User.class)
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+				.list();
 	}
 
 	@Transactional

@@ -3,6 +3,7 @@ package com.milgo.cubby.dao.impl;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,9 @@ public class TrainingDaoImpl implements TrainingDao{
 	@Transactional
 	public List<?> getAllTrainings() {
 		return sessionFactory.getCurrentSession()
-				.createCriteria(Training.class).list();
+				.createCriteria(Training.class)
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+				.list();
 	}
 
 	@Transactional
