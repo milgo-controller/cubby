@@ -69,8 +69,8 @@ public class MainController {
 		
 		/* Pobieramy dane aktualnie zalogowanego administratora */
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String name = auth.getName();
-	    User loggedUser = userBo.getUserByLogin(name);
+	    
+	    User loggedUser = (User)auth.getPrincipal();
 		
 	    /* Pobieramy liste wszystkich u¿ytkowników */
 	    List<?> userList = userBo.getAllUsers();

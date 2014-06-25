@@ -1,6 +1,7 @@
 package com.milgo.cubby.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Iterator;
 import java.util.Date;
@@ -32,6 +33,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.milgo.cubby.validator.annotations.FieldMatch;
 
@@ -45,7 +48,7 @@ import com.milgo.cubby.validator.annotations.FieldMatch;
 						second="confirmPassword", 
 						message="The password fields must match")
 		} )
-public class User {
+public class User implements UserDetails{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -100,6 +103,9 @@ public class User {
 	
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="pk.user", cascade=CascadeType.ALL)
 	public Set<UserTraining> userTrainings = new HashSet<UserTraining>(0);
+	
+	@Transient
+	public Collection<? extends GrantedAuthority> authorities;
 	
 	public Set<UserTraining> getUserTrainings() {
 		return userTrainings;
@@ -232,6 +238,46 @@ public class User {
 
 	public void setRoleNames(HashMap<String,String>  roleNames) {
 		this.roleNames = roleNames;
+	}
+
+	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+		this.authorities = authorities;
+	}
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return this.authorities;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return login;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return enabled==1;
 	}
 	
 }
