@@ -45,12 +45,12 @@ public class TrainingDaoImpl implements TrainingDao{
 						ui.remove();
 				}
 					
-				Iterator<?> ti = ut.getTraining().getUserTrainings().iterator();
+				/*Iterator<?> ti = ut.getTraining().getUserTrainings().iterator();
 				while(ti.hasNext()){
 					UserTraining tut = (UserTraining)ti.next();
 					if(tut.getTraining().getId() == id)
 						ti.remove();
-				}
+				}*/
 				
 				i.remove();
 				sessionFactory.getCurrentSession().delete(ut);

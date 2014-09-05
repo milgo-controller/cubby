@@ -2,6 +2,7 @@ package com.milgo.cubby.model;
 
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
+@Cacheable
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Table(name="ROLES")
 public class Role {
 	
@@ -26,6 +32,7 @@ public class Role {
 	private String roleName;
 	
 	@OneToMany(cascade=CascadeType.PERSIST)
+	@Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
 	@JoinTable(name="USER_ROLES", 
 		joinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")}/*,
 		inverseJoinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")}*/)

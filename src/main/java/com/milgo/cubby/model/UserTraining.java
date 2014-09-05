@@ -2,6 +2,7 @@ package com.milgo.cubby.model;
 
 import javax.persistence.AssociationOverrides;
 import javax.persistence.AssociationOverride;
+import javax.persistence.Cacheable;
 import javax.persistence.JoinColumn;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -9,8 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
 @Table(name = "USER_TRAININGS")
+@Cacheable
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @AssociationOverrides({
         @AssociationOverride(name = "pk.training", 
             joinColumns = @JoinColumn(name = "TRAINING_ID")),

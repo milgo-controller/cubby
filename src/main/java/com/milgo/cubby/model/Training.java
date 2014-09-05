@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,9 +16,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Cacheable
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Table(name="TRAININGS")
 public class Training {
 
@@ -50,7 +55,8 @@ public class Training {
 	@Column(name="PLACE")
 	public String place;
 	
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="pk.training", cascade=CascadeType.ALL)
+	/*@OneToMany(fetch=FetchType.EAGER, mappedBy="pk.training", cascade=CascadeType.ALL)
+	@Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
 	public Set<UserTraining> userTrainings = new HashSet<UserTraining>();
 	
 	public Set<UserTraining> getUserTrainings() {
@@ -59,7 +65,7 @@ public class Training {
 
 	public void setUserTrainings(Set<UserTraining> userTrainings) {
 		this.userTrainings = userTrainings;
-	}
+	}*/
 
 	public Integer getId() {
 		return id;

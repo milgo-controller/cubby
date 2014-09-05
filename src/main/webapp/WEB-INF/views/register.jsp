@@ -11,7 +11,7 @@
 <spring:url value="/resources/css/style.css" var="stylecss"/>    
 <link href="${stylecss}" rel="stylesheet" type="text/css"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Register</title>
+<title>Rejestracja nowego klienta</title>
 </head>
 <style>
 .error {
@@ -20,7 +20,7 @@
 </style>
 <body>
 
-<div align="center"><h3>Register page</h3></div>
+<div align="center"><h3>Rejestracja nowego klienta</h3></div>
 
 <sf:form method="POST" modelAttribute="user" >
 	<fieldset>
@@ -31,12 +31,12 @@
 				<td><sf:errors path="login" cssClass="error" /></td>
 			</tr>
 			<tr>
-				<th><label for="user_pass">Password</label></th>
+				<th><label for="user_pass">Haslo</label></th>
 				<td><sf:password path="password" id="user_pass" size="15" showPassword="true"/></td>
 				<td><sf:errors path="password" cssClass="error" /></td>
 			</tr>
 			<tr>
-				<th><label for="user_confirm_pass">Confirm Password</label></th>
+				<th><label for="user_confirm_pass">Powtorz haslo</label></th>
 				<td><sf:password path="confirmPassword" id="user_confirm_pass" size="15" showPassword="true"/></td>
 				<td><sf:errors path="confirmPassword" cssClass="error" /></td>
 			</tr>
@@ -46,32 +46,32 @@
 				<td><sf:errors path="email" cssClass="error" /></td>
 			</tr>
 			<tr>
-				<th><label for="user_first_name">First name</label></th>
+				<th><label for="user_first_name">Imie</label></th>
 				<td><sf:input path="firstName" id="user_first_name" size="15"/></td>
 				<td><sf:errors path="firstName" cssClass="error" /></td>
 			</tr>
 			<tr>
-				<th><label for="user_last_name">Last name</label></th>
+				<th><label for="user_last_name">Nazwisko</label></th>
 				<td><sf:input path="lastName" id="user_last_name" size="15"/></td>
 				<td><sf:errors path="lastName" cssClass="error" /></td>
 			</tr>
 			<tr>
-				<th><label for="user_birth_date">Birth date (dd/MM/yy)</label></th>
+				<th><label for="user_birth_date">Data urodzenia (dd/MM/yy)</label></th>
 				<td><sf:input path="birthDate" id="user_birth_date" size="15"/></td>
 				<td><sf:errors path="birthDate" cssClass="error" /></td>
 			</tr>
 			<tr>
-				<th><label for="user_street">Street</label></th>
+				<th><label for="user_street">Ulica</label></th>
 				<td><sf:input path="address.street" id="user_street" size="15"/></td>
 				<td><sf:errors path="address.street" cssClass="error" /></td>
 			</tr>
 			<tr>
-				<th><label for="user_zipcode">Zip code</label></th>
+				<th><label for="user_zipcode">Kod pocztowy</label></th>
 				<td><sf:input path="address.zipCode" id="user_zipcode" size="15"/></td>
 				<td><sf:errors path="address.zipCode" cssClass="error" /></td>
 			</tr>
 			<tr>
-				<th><label for="user_city">City</label></th>
+				<th><label for="user_city">Miasto</label></th>
 				<td><sf:input path="address.city" id="user_city" size="15"/></td>
 				<td><sf:errors path="address.city" cssClass="error" /></td>
 			</tr>

@@ -58,9 +58,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         }
 
         if (isUser) {
-            return "/home";
+            return "/home/mytrainings";
         } else if (isAdmin || isModerator) {
-            return "/admin";
+            return "/admin/allusers";
         } else {
             throw new IllegalStateException();
         }

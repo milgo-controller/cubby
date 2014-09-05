@@ -29,21 +29,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 		
 		com.milgo.cubby.model.User domainUser = userDao.getUserByLogin(userName);
 		
-		boolean enabled = false;
-		boolean accountNonExpired = true;
-		boolean credentialsNonExpired = true;
-		boolean accountNonLocked = true;
-		
-		if(domainUser.getEnabled() == 1)
-			enabled = true;
+		domainUser.setAuthorities(getAuthorities(domainUser.getRole().getRoleName()));
 
-		return new User(domainUser.getLogin(), 
-				domainUser.getPassword(),
-				enabled,
-				accountNonExpired,
-				credentialsNonExpired,
-				accountNonLocked,
-				getAuthorities(domainUser.getRole().getRoleName()));
+		return domainUser;
 	}
 
     public Collection<SimpleGrantedAuthority> getAuthorities(String role) {

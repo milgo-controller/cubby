@@ -15,6 +15,19 @@
 	margin: 16px;
 }
 </style>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript">
+ $(function() {
+		/* For zebra striping */
+        $("table tr:nth-child(odd)").addClass("odd-row");
+		/* For cell text alignment */
+		$("table td:first-child, table th:first-child").addClass("first");
+		/* For removing the last border */
+		$("table td:last-child, table th:last-child").addClass("last");
+});
+</script>
+
 </head>
 <body onload='document.f.j_username.focus();'>
 <div align="center">
@@ -33,21 +46,21 @@
  
 		<table>
 			<tr>
-				<td><h3>User:</h3></td>
+				<td><h3>Login:</h3></td>
 				<td><input type='text' name='j_username' value=''>
 				</td>
 			</tr>
 			<tr>
-				<td><h3>Password:</h3></td>
+				<td><h3>Haslo:</h3></td>
 				<td><input type='password' name='j_password' />
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<a href="register/">Register</a>
+					<a href="register/">Zarejestruj mnie</a>
 				</td>
 				<td><p align="right"><input name="submit" type="submit"
-					value="Submit" /></p>
+					value="Zaloguj" /></p>
 				</td>				
 			</tr>
 		</table>

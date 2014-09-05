@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,6 +52,9 @@ public class MainController {
 	@Autowired
 	public RoleBo roleBo;
 	
+	@Autowired 
+	public SessionFactory sessionFactory;
+	
 	/** 
 	 * Zmienna, do której wstrzykiwana jest instancja klasy implementuj¹ca interfejs TrainingBo (komponent Spring MVC) 
 	 */
@@ -65,12 +69,27 @@ public class MainController {
 	 * @param model lista u¿ytkowników w postaci kolekcji typu Map przekazywana do widoku (w tym przypadku widoku admin)
 	 */
 	@RequestMapping({"/admin"})
-	public String showAdminPage(Map<String, Object> model){
+	public String adminShowHomePage(){		
 		
+		/* Przekierowijemy do widoku admin */
+		return "admin";
+	}
+	
+	@RequestMapping({"/admin/alltrainings"})
+	public String adminShowAllTrenings(Map<String, Object> model){
+	
+		/* Dodajemy liste wszystlkich treningow do modelu, który zostanie przeslany do widoku */
+		List<?> trList =  trainingBo.getAllTrainings();
+		model.put("trainingsList", trList);
+		return "admin-all-trainings";
+	}
+	
+	@RequestMapping({"/admin/allusers"})
+	public String adminShowAllUsers(Map<String, Object> model){
 		/* Pobieramy dane aktualnie zalogowanego administratora */
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String name = auth.getName();
-	    User loggedUser = userBo.getUserByLogin(name);
+	    
+	    User loggedUser = (User)auth.getPrincipal();
 		
 	    /* Pobieramy liste wszystkich u¿ytkowników */
 	    List<?> userList = userBo.getAllUsers();
@@ -81,35 +100,29 @@ public class MainController {
 		/* W pêtli przechodzimy po kazdym u¿ytkowników poprzez iterator */
 	    while (iterator.hasNext()) {
 			User user = (User)iterator.next();
-				
+			Role userRole = user.getRole();
 			/* Usuwamy z listy uzytkownika który wyœwietla t¹ liste */
 			if(loggedUser.getRole().getRoleName().compareTo("ADMIN") == 0)
 			{
-				if(user.getRole().getRoleName().compareTo("ADMIN") == 0)
+				if(userRole.getRoleName().compareTo("ADMIN") == 0)
 						iterator.remove();
 			}
 			else
 			{
-				if((user.getRole().getRoleName().compareTo("ADMIN") == 0) ||
-					(user.getRole().getRoleName().compareTo("MODERATOR") == 0)	)
+				if((userRole.getRoleName().compareTo("ADMIN") == 0) ||
+					(userRole.getRoleName().compareTo("MODERATOR") == 0)	)
 						iterator.remove();
 			}
 				
 			/* Pobieramy nazwê roli u¿ytkownika (poniewa¿ w bazie danych jest ona reprezentowana liczbowo */
-			user.setRoleName(user.getRole().getRoleName());
+			user.setRoleName(userRole.getRoleName());
 	    }
 	    
 	    /* Dodajemy liste uzytkownikow do modelu, który zostanie przes³any do widoku */
 		model.put("usersList", userList);
 		
-		/* Dodajemy liste wszystlkich treningow do modelu, który zostanie przeslany do widoku */
-		List<?> trList =  trainingBo.getAllTrainings();
-		model.put("trainingsList", trList);
-		
-		/* Przekierowijemy do widoku admin */
-		return "admin";
+		return "admin-all-users";
 	}
-	
 	
 	/** 
 	 * Metoda mapuj¹ca adres "/admin/remove/user/{login}" (panel administratora) dla metody GET. Usuwa u¿ytkownika na podstawie parametru {login} podanego w adresie, 
@@ -136,10 +149,10 @@ public class MainController {
 	 * a nastêpnie przekierowywyje do widoku edit_user.
 	 * 
 	 * @param login nazwa u¿ytkownika, który ma zostaæ edytowany
-	 * @param model dane biznesowe uzytkownika (przekazywane do widoku training_edit)
+	 * @param model dane biznesowe uzytkownika (przekazywane do widoku training-edit)
 	 */
 	@RequestMapping(value="/admin/edit/user/{login}", method=RequestMethod.GET)
-	public String showAdminEditUser(@PathVariable String login, Model model){		
+	public String adminShowEditUser(@PathVariable String login, Model model){		
 		
 		/* Pobieramy u¿ytkownika o podanym loginie */
 		User user = userBo.getUserByLogin(login);
@@ -172,12 +185,69 @@ public class MainController {
 		/* dodajemy liste treningów do modelu, który zostanie przekazany do widoku */
 		model.addAttribute("userTrainings", userTrainings);
 		
-		/* przekierowujemy do widoku user_edit */
-		return "user_edit";
+		/* przekierowujemy do widoku admin-user-edit */
+		return "admin-user-edit";
 	}
 	
 	/** 
-	 * Metoda mapuj¹ca adres "/admin/edit/user/{login}" (panel administratora) dla metody POST. Zapisuje dana edytowane w widoku user_edit, 
+	 * Metoda mapuj¹ca adres "/home/edit/user/{login}" (panel administratora) dla metody GET. Przygotowywuje dane to wys³ania do formularza w widoku edit_user przeznaczonego do edycji danych uzytkownika, 
+	 * a nastêpnie przekierowywyje do widoku edit_user.
+	 * 
+	 * @param login nazwa u¿ytkownika, który ma zostaæ edytowany
+	 * @param model dane biznesowe uzytkownika (przekazywane do widoku training-edit)
+	 */
+	@RequestMapping(value="/home/edit", method=RequestMethod.GET)
+	public String userShowEditUser(Model model){		
+		
+		/* Pobieramy dane zalogowanego u¿ytkownika */
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+	    User loggedUser = userBo.getUserByLogin(name);
+	    
+		/* dodajemy u¿ytkownika do modelu, który zostanie przekazany do widoku */
+		model.addAttribute("user", loggedUser);
+
+		/* przekierowujemy do widoku user-edit-details */
+		return "user-edit-details";
+	}
+	
+	@RequestMapping(value="/home/edit", method=RequestMethod.POST)
+	public ModelAndView userEditUser(@Valid User userForm, BindingResult bindingResult){		
+		
+		/* Troche inny sposób komunikacji model/widok tworzymy obiekt klasy ModelAndView i odrazu przekazujemy nazwê widoku docelowego */
+		ModelAndView mav = new ModelAndView("user-edit-details");
+		
+		/* Sprawdzamy czy przes³any formularz zawiera³ b³êdy */
+		if(bindingResult.hasErrors()){
+			/* Jeœli tak to dodaj do modelu ten sam formularz i przekieruj z powrotem (do poprawy) */
+			mav.addObject("user", userForm);
+			return mav;
+		}
+		
+		/* Jesli formularz jest poprawny zmieñ decelowy widok na admin */
+		mav.setViewName("redirect:/home/edit");
+		
+		/* Pobieramy dane zalogowanego u¿ytkownika */
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+	    User updatedUser = userBo.getUserByLogin(name);
+	    
+		/* Zmieniamy niektóre w³aœciwoœci u¿ytkownika na podstawie danych z formularza */
+		updatedUser.setAddress(userForm.getAddress());
+		updatedUser.setEmail(userForm.getEmail());
+		updatedUser.setFirstName(userForm.getFirstName());
+		updatedUser.setLastName(userForm.getLastName());
+		updatedUser.setBirthDate(userForm.getBirthDate());
+
+		/* Zapisujemy zmodyfikowane dane uzytkownika */
+		userBo.modifyUser(updatedUser);
+		
+		/* Zwracamy obiekt ModelAndView, który zawiera informacje o widoku, do którego zostaniemy przekierowani i model danych który zostanie przes³any do tego widoku */
+		return mav;
+	}
+	
+	/** 
+	 * Metoda mapuj¹ca adres "/admin/edit/user/{login}" (panel administratora) dla metody POST. Zapisuje dana edytowane w widoku user-edit, 
 	 * a nastêpnie przekierowywyje do widoku admin.
 	 * 
 	 * @param login nazwa u¿ytkownika, który ma zostaæ edytowany
@@ -188,12 +258,14 @@ public class MainController {
 	public ModelAndView adminEditUser(@PathVariable String login, @Valid User userForm, BindingResult bindingResult){
 		
 		/* Troche inny sposób komunikacji model/widok tworzymy obiekt klasy ModelAndView i odrazu przekazujemy nazwê widoku docelowego */
-		ModelAndView mav = new ModelAndView("user_edit");
+		ModelAndView mav = new ModelAndView("redirect:/admin/edit/user/"+userForm.login);
 		
 		/* Sprawdzamy czy przes³any formularz zawiera³ b³êdy */
 		if(bindingResult.hasErrors()){
 			/* Jeœli tak to dodaj do modelu ten sam formularz i przekieruj z powrotem (do poprawy) */
+			
 			mav.addObject("user", userForm);
+			System.out.println(bindingResult.getAllErrors().get(0).getDefaultMessage());			
 			return mav;
 		}
 		
@@ -210,10 +282,11 @@ public class MainController {
 		updatedUser.setLastName(userForm.getLastName());
 		updatedUser.setBirthDate(userForm.getBirthDate());
 		
+		//System.out.println(userForm.getEnabled());
 		/* Odblokowanie/zablokowanie u¿ytkownika do korzystania z mo¿liwoœci logowania */
-		if(userForm.getEnabled() == null)
+		/*if(userForm.getEnabled() == null)
 			updatedUser.setEnabled(0);
-		else updatedUser.setEnabled(1);
+		else updatedUser.setEnabled(1);*/
 			
 		/* Pobieramy obiekt roli u¿ytkowanika na podstawie nazwy */ 
 		Role role = roleBo.getRoleByName(userForm.getRoleName());
@@ -231,18 +304,19 @@ public class MainController {
 		return mav;
 	}
 	
+
 	/** 
-	 * Metoda mapuj¹ca adres "admin/add/training" (panel administratora) dla metody GET. Przygotowuje dane do widoku training_edit, wykorzystywanego w tym przypadku do dodania nowego treningu 
-	 * a nastêpnie przekierowywyje do widoku training_edit.
+	 * Metoda mapuj¹ca adres "admin/add/training" (panel administratora) dla metody GET. Przygotowuje dane do widoku training-edit, wykorzystywanego w tym przypadku do dodania nowego treningu 
+	 * a nastêpnie przekierowywyje do widoku training-edit.
 	 * 
-	 * @param model  dane biznesowe dla nowego treningu (przekazywane do widoku training_edit).
+	 * @param model  dane biznesowe dla nowego treningu (przekazywane do widoku training-edit).
 	 */
 	@RequestMapping({"admin/add/training"})
-	public String showAddTrainingPage(ModelMap model){
+	public String adminShowAddTrainingPage(ModelMap model){
 		/* Dodajemy do modelu now¹ instancjê klasy Training, która bêdzie przekazana do widoku */
 		model.addAttribute(new Training());
-		/* Przekierowujemy do widoku training_edit */
-		return "training_edit";
+		/* Przekierowujemy do widoku admin-training-edit */
+		return "admin-training-edit";
 	}
 	
 	/** 
@@ -299,36 +373,36 @@ public class MainController {
 	}
 	
 	/** 
-	 * Metoda mapuj¹ca adres "admin/add/training" (panel administratora) dla metody POST. Sprawdza poprawnoœæ danych przekazanych przez formularz z widoku training_edit,
+	 * Metoda mapuj¹ca adres "admin/add/training" (panel administratora) dla metody POST. Sprawdza poprawnoœæ danych przekazanych przez formularz z widoku training-edit,
 	 * a nastêpnie jeœli nie wykry³a b³êdów dodaje nowy trening do bazy danych. Na konicu przekierowywuje do widoku admin.
 	 * 
 	 * @param training instancja klasy Training, któr¹ dodajemy
 	 * @param bindingResult przechowuje wynik walidacji (b³êdy z formularza)
 	 */
 	@RequestMapping(value="admin/add/training", method=RequestMethod.POST)
-	public String adminEditTraining(@Valid Training training, BindingResult bindingResult){
+	public String adminAddTraining(@Valid Training training, BindingResult bindingResult){
 		
 		/* Sprawdzamy czy dane w obiekcie training s¹ poprawne i czy bindingResult nie zawiera informacji o b³edach w formularzu */
 		int res = validateTraining(training, bindingResult);
 		
-		/* Je¿eli s¹ b³êdy to wracamy do widoku training_edit (¿eby u¿ytkownik poprawi³) */
+		/* Je¿eli s¹ b³êdy to wracamy do widoku training-edit (¿eby u¿ytkownik poprawi³) */
 		if(res > 0){
-			return "training_edit";
+			return "admin-training-edit";
 		}
 		else{ /*Je¿li nie ma b³edów to dodajemy trening do bazy */
 			trainingBo.addTraining(training);
 		}
 		
 		/* Przekierowujemy do strony /admin */
-		return "redirect:/admin";
+		return "redirect:/admin/alltrainings";
 	}
 	
 	/** 
-	 * Metoda mapuj¹ca adres "admin/training/edit/{id}" (panel administratora) dla metody GET. Przygotowuje dane do przes³ania do formularza w widoku training_edit (w celu edycji tych danych),
-	 * a nastêpnie przekierowywuje do widoku training_edit (widok z formularzem edycyjnym).
+	 * Metoda mapuj¹ca adres "admin/training/edit/{id}" (panel administratora) dla metody GET. Przygotowuje dane do przes³ania do formularza w widoku training-edit (w celu edycji tych danych),
+	 * a nastêpnie przekierowywuje do widoku training-edit (widok z formularzem edycyjnym).
 	 * 
 	 * @param id numer id treningu
-	 * @param model dane biznesowe treningu (przekazywane do widoku training_edit)
+	 * @param model dane biznesowe treningu (przekazywane do widoku training-edit)
 	 */
 	@RequestMapping(value="admin/training/edit/{id}", method=RequestMethod.GET)
 	public String adminEditTraining(@PathVariable Integer id, Model model)
@@ -336,13 +410,13 @@ public class MainController {
 		/* Dodaj wyszukany trening do modelu, który bedzie przekazany do widoku w celu edycji */
 		model.addAttribute("training", trainingBo.getTrainingById(id));
 		
-		/* PrzejdŸ do widoku training_edit */
-		return "training_edit";
+		/* PrzejdŸ do widoku training-edit */
+		return "admin-training-edit";
 	}
 	
 	/** 
-	 * Metoda mapuj¹ca adres "admin/training/edit/{id}" (panel administratora) dla metody POST. Sprawdza poprawnoœæ danych przekazanych przez formularz z widoku training_edit,
-	 *  jeœli nie wykry³a b³êdów zapisuje zmiany w trening (dokonane w widoku training_edit) do bazy danych i przekierowywuje do widoku trainin-edit. W razie b³êdów przekierowywuje z powrotem do widoku training_edit, gdzie na formularzu zostan¹ zaznaczone b³êdne informacje do poprawienia.
+	 * Metoda mapuj¹ca adres "admin/training/edit/{id}" (panel administratora) dla metody POST. Sprawdza poprawnoœæ danych przekazanych przez formularz z widoku training-edit,
+	 *  jeœli nie wykry³a b³êdów zapisuje zmiany w trening (dokonane w widoku training-edit) do bazy danych i przekierowywuje do widoku trainin-edit. W razie b³êdów przekierowywuje z powrotem do widoku training-edit, gdzie na formularzu zostan¹ zaznaczone b³êdne informacje do poprawienia.
 	 * 
 	 * @param id numer id treningu
 	 * @param training instancja klasy training, któr¹ edytujemy
@@ -354,15 +428,15 @@ public class MainController {
 		/* Sprawdzamy czy dane w obiekcie training s¹ poprawne i czy bindingResult nie zawiera informacji o b³edach w formularzu */
 		int res = validateTraining(training, bindingResult);
 		
-		/* Je¿eli s¹ b³êdy to wracamy do widoku training_edit (¿eby u¿ytkownik poprawi³) */
+		/* Je¿eli s¹ b³êdy to wracamy do widoku training-edit (¿eby u¿ytkownik poprawi³) */
 		if(res > 0){
-			return "training_edit";
+			return "admin-training-edit";
 		}
 		else{ /*Je¿li nie ma b³edów to dodajemy trening do bazy */
 			trainingBo.modifyTraining(training);
 		}
-		/* Przekierowujemy do widoku training_edit */
-		return "training_edit";
+		/* Przekierowujemy do widoku training-edit */
+		return "admin-training-edit";
 	}
 	
 	/** 
@@ -389,7 +463,7 @@ public class MainController {
 	 * @param id id treningu, którego aktywujemy dla uzytkownika
 	 */
 	@RequestMapping(value="admin/edit/user/{login}/training/activate/{id}", method=RequestMethod.GET)
-	public String activateUserTraining(@PathVariable("login") String login, @PathVariable("id") Integer id)
+	public String adminActivateUserTraining(@PathVariable("login") String login, @PathVariable("id") Integer id)
 	{
 		/* Pobieramy dane u¿ytkownika na podstawie loginu z adresu*/
 		User user = userBo.getUserByLogin(login);
@@ -422,7 +496,7 @@ public class MainController {
 	 * @param id id treningu, którego dezaktywujemy dla uzytkownika
 	 */
 	@RequestMapping(value="admin/edit/user/{login}/training/deactivate/{id}", method=RequestMethod.GET)
-	public String deactivateUserTraining(@PathVariable("login") String login, @PathVariable("id") Integer id, Model model)
+	public String adminDeactivateUserTraining(@PathVariable("login") String login, @PathVariable("id") Integer id, Model model)
 	{
 		/* Pobieramy dane u¿ytkownika na podstawie loginu z adresu*/
 		User user = userBo.getUserByLogin(login);
@@ -487,8 +561,22 @@ public class MainController {
 	 * @param model zawieraæ bêdzie liste treningów u¿ytkownika która zostanie przekazana do widoku home
 	 */
 	@RequestMapping(value="/home")
-	public String showHomePage(Map<String, Object> model)
+	public String userShowHomePage(Map<String, Object> model)
 	{
+
+		
+		/* Przekierowujemy do widoku home */
+		return "home";
+	}
+	
+	/** 
+	 * Metoda mapuj¹ca adres "/home/mytrainings" (panel uzytkownika) dla metody GET. Przygotowuje dane do przes³ania do widoku home (przygotowuje listê treningów danego uzytkownika). 
+	 * Nastêpnie przekierowywuje do widoku home-my-trainings.
+	 * 
+	 * @param model zawieraæ bêdzie liste treningów u¿ytkownika która zostanie przekazana do widoku home
+	 */
+	@RequestMapping(value="/home/mytrainings")
+	public String userShowMyTrainings(Map<String, Object> model){
 		/* Pobieramy dane zalogowanego u¿ytkownika */
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String name = auth.getName();
@@ -497,6 +585,24 @@ public class MainController {
 		/* Pobieramy listê treningów zalogowanego u¿ytkownika i dodajemy do modelu, który bedzie przekazany do widoku */
 		List<Training> userTrainings = loggedUser.getTrainings();
 		model.put("userTrainings", userTrainings);
+		return "user-my-trainings";
+	}
+	
+	/** 
+	 * Metoda mapuj¹ca adres "/home/mytrainings" (panel uzytkownika) dla metody GET. Przygotowuje dane do przes³ania do widoku home (przygotowuje listê treningów danego uzytkownika). 
+	 * Nastêpnie przekierowywuje do widoku home-my-trainings.
+	 * 
+	 * @param model zawieraæ bêdzie liste treningów u¿ytkownika która zostanie przekazana do widoku home
+	 */
+	@RequestMapping(value="/home/alltrainings")
+	public String userShowAllTrainings(Map<String, Object> model){
+		/* Pobieramy dane zalogowanego u¿ytkownika */
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+	    User loggedUser = userBo.getUserByLogin(name);
+	    
+		/* Pobieramy listê treningów zalogowanego u¿ytkownika i dodajemy do modelu, który bedzie przekazany do widoku */
+		List<Training> userTrainings = loggedUser.getTrainings();
 	
 		/* Tworzymy listê wszystkich treningów z wykluczeniem tych na które u¿ytkownik juz jest zapisany */
 		/* Najpierw pobieramy wszystkie treningi */
@@ -526,7 +632,7 @@ public class MainController {
 		model.put("trainingsList", trList);
 		
 		/* Przekierowujemy do widoku home */
-		return "home";
+		return "user-all-trainings";
 	}
 	
 	/** 
@@ -536,7 +642,7 @@ public class MainController {
 	 * @param id id treningu do którego u¿ytkownik zostaje przypisany
 	 */
 	@RequestMapping(value="/home/training/join/{id}", method=RequestMethod.GET)
-	public String homeTrainingJoin(@PathVariable Integer id){
+	public String userTrainingJoin(@PathVariable Integer id){
 		
 		/* Pobieramy dane zalogowanego u¿ytkownika */
 		String userName = SecurityContextHolder.getContext()
@@ -560,7 +666,7 @@ public class MainController {
 		userBo.modifyUser(loggedUser);
 		
 		/* Przekierowujemy do strony home */
-		return "redirect:/home";
+		return "redirect:/home/mytrainings";
 	}
 	
 	/** 
@@ -570,7 +676,7 @@ public class MainController {
 	 * @param id id treningu do którego u¿ytkownik zostaje wykluczony
 	 */
 	@RequestMapping(value="/home/training/quit/{id}", method=RequestMethod.GET)
-	public String homeTrainingQuit(@PathVariable Integer id){
+	public String userTrainingQuit(@PathVariable Integer id){
 
 		/* Pobieramy dane zalogowanego u¿ytkownika */
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -591,7 +697,7 @@ public class MainController {
 	    userBo.modifyUser(loggedUser);
 	    
 	    /* Przekierowujemy do strony home */
-		return "redirect:/home";
+		return "redirect:/home/alltrainings";
 	}
 	
 	/** 
@@ -637,12 +743,12 @@ public class MainController {
 		
 		/* Jeœli nie by³o b³êdów nadajemy nowemu u¿ytkownikowi role USER, ustawiamy enable na 0 bo administrator musi potwierdziæ */
 		userForm.setRole(roleBo.getRoleByName("USER"));
-		userForm.setEnabled(0);
+		userForm.setEnabled(1);
 		
 		/* Dodajemy nowego u¿ytkownika do bazy danych */
 		userBo.addUser(userForm);
 		
-		/* Przekierowujemy do widoku user_added */
-		return "user_added";
+		/* Przekierowujemy do widoku user-added */
+		return "user-added";
 	}
 }
