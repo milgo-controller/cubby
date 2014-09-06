@@ -33,26 +33,18 @@
 </head>
 <body>
 
-<table> 
+<table width="50%"> 
 <tr>
-<td>
-<%@include file="logo.jsp" %>
-</td>
-<td>
-<div align="center">
-<h1>Admin panel
-(<sec:authentication property="principal.username"/>) </h1>
-</div>
-</td>
-</table>
+	<td rowspan="2">
+		<%@include file="logo.jsp" %>
+	</td>
+	<td colspan="3">
+		<div align="center"><h1>Panel administratora <sec:authentication property="principal.username"/></h1></div>
+	</td>
 
-<table>
 <tr>
-<spring:url value="/admin/allusers" var="allusers"/>
-<spring:url value="/admin/alltrainings" var="alltrainings"/>
-<spring:url value="/j_spring_security_logout" var="logout"/>  
-<td><a href="${allusers}">Lista klientów</a></td>
-<td><a href="${alltrainings}">Wszystkie treningi</a></td>
-<td><a href="${logout}">Wyloguj</a></td>
+	<td><spring:url value="/admin/allusers" var="allusers"/><a href="${allusers}">Lista klientów</a></td>
+	<td><spring:url value="/admin/alltrainings" var="alltrainings"/><a href="${alltrainings}">Wszystkie treningi</a></td>
+	<td><spring:url value="/j_spring_security_logout" var="logout"/>  <a href="${logout}">Wyloguj</a></td>
 </tr>
 </table>

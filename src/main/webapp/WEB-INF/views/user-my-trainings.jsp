@@ -12,11 +12,11 @@
 <thead>
 	<tr><td colspan="5"><div align="center"><h3>Moje treningi</h3></div></td></tr>
 	<tr>
-		<td><strong>Name</strong></td>
-		<td><strong>Description</strong></td>
-		<td><strong>Cost</strong></td>
+		<td><strong>Nazwa</strong></td>
+		<td><strong>Opis</strong></td>
+		<td><strong>Cena</strong></td>
 		<td><strong>Online</strong></td>		
-		<td colspan="2"><strong>Commands</strong></td>
+		<td colspan="2"><strong>Operacje</strong></td>
 	</tr>
 </thead>
 
@@ -28,7 +28,7 @@
 			<td>${userTraining.cost}</td>			
 			<td>${userTraining.online}</td>
 			<spring:url value="/home/training/quit/" var="quit"/>
-			<td><a href="${quit}${userTraining.id}">Quit</a></td>
+			<td><a href="${quit}${userTraining.id}">Zrezygnuj</a></td>
 		</tr>
 	</c:forEach>
 </tbody>

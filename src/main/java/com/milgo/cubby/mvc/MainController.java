@@ -61,7 +61,13 @@ public class MainController {
 	@Autowired
 	public TrainingBo trainingBo;
 	
-	
+	@RequestMapping({"/index"})
+	public String showIndexPage(Map<String, Object> model){		
+		
+		List<?> trList =  trainingBo.getAllTrainings();
+		model.put("trainingsList", trList);
+		return "index";
+	}
 	/** 
 	 * Metoda mapuj¹ca adres "/admin" (panel administratora) dla metody GET. Pobiera listê u¿ytkowników (wszystkich oprócz administratora) i listê treningów, 
 	 * przekierowywyje do widoku admin.
@@ -563,8 +569,6 @@ public class MainController {
 	@RequestMapping(value="/home")
 	public String userShowHomePage(Map<String, Object> model)
 	{
-
-		
 		/* Przekierowujemy do widoku home */
 		return "home";
 	}
