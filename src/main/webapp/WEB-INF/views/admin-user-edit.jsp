@@ -17,13 +17,13 @@
 	<!-- ALL TRAININGS THAT USER CAN JOIN -->
 	<table cellpadding="5" cellspacing="0">
 		<thead>
-			<tr><td colspan="7"><div align="center"><h3>Treningi klienta</h3></div></td></tr>
+			<tr><td colspan="7"><div align="center"><h3>Treningi klienta: ${user.login}</h3></div></td></tr>
 			<tr>
-				<td><strong>Name</strong></td>
-				<td><strong>Description</strong></td>
-				<td><strong>Cost</strong></td>
+				<td><strong>Nazwa</strong></td>
+				<td><strong>Opis</strong></td>
+				<td><strong>Cena</strong></td>
 				<td><strong>Online</strong></td>		
-				<td colspan="2"><strong>Commands</strong></td>
+				<td colspan="2"><strong>Operacje</strong></td>
 			</tr>
 		</thead>
 		

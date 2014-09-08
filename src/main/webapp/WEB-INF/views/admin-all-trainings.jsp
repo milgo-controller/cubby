@@ -24,8 +24,8 @@
 			<td>${training.description}</td>
 			<td>${training.cost}</td>			
 			<td>${training.online}</td>
-			<td><a href="<spring:url value="/admin/training/edit/${training.id}" />">Edit</a></td>
-			<td><a href="/admin/training/remove/${training.id}" onclick="return confirm ('Removing training ${training.name}! Are you sure?');">Remove</a></td>
+			<td><a href="<spring:url value="/admin/training/edit/${training.id}" />">Edytuj</a></td>
+			<td><a href="/admin/training/remove/${training.id}" onclick="return confirm ('Removing training ${training.name}! Are you sure?');">Usun</a></td>
 		</tr>
 	</c:forEach>
 </tbody>
@@ -33,7 +33,7 @@
 <tfoot>
 	<tr>
 	<spring:url value="/admin/add/training/" var="addTraining"/>
-		<td colspan="6"><a href="${addTraining}">Add training</a></td>
+		<td colspan="6"><a href="${addTraining}">Dodaj trening</a></td>
 	</tr>
 </tfoot>
 

@@ -77,7 +77,7 @@
 			</tr>
 			<tr>
 				<th></th>
-				<td><input name="commit" type="submit" value="Create Account"/></td>
+				<td><input name="commit" type="submit" value="Zarejestruj"/></td>
 			</tr>
 		</table>
 	</fieldset>

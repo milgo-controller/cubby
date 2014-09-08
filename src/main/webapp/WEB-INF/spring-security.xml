@@ -20,17 +20,6 @@
 	  <authentication-provider user-service-ref="customUserDetailsService">
             <password-encoder hash="plaintext" />
 	  
-		<!-- <jdbc-user-service data-source-ref="dataSource"
- 
-		   users-by-username-query="
-		      select login, password, enabled 
-		      from users where login=?" 
- 
-		   authorities-by-username-query="
-		      select u.login, r.role from users u, roles r, user_roles ur
-				where u.id = ur.user_id and r.id = ur.role_id and u.login=?" 
- 
-		/> -->
 	  </authentication-provider>
 	</authentication-manager>
  

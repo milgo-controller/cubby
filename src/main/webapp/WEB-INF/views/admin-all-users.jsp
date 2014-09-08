@@ -13,7 +13,7 @@
 		<td><strong>Nazwisko</strong></td>
 		<td><strong>Email</strong></td>
 		<td><strong>Rola</strong></td>
-		<td colspan="2"><strong>Commands</strong></td>
+		<td colspan="2"><strong>Polecenia</strong></td>
 	</tr>
 </thead>
 
@@ -25,8 +25,8 @@
 			<td>${user.lastName}</td>			
 			<td>${user.email}</td>
 			<td>${user.roleName}</td>
-			<td><a href="<spring:url value="/admin/edit/user/${user.login}" />">Edit</a></td>
-			<td><a href="/admin/remove/user/${user.login}" onclick="return confirm ('Removing user ${user.login}! Are you sure?');">Remove</a></td>
+			<td><a href="<spring:url value="/admin/edit/user/${user.login}" />">Edytuj</a></td>
+			<td><a href="/admin/remove/user/${user.login}" onclick="return confirm ('Removing user ${user.login}! Czy jestes pewien?');">Usun</a></td>
 		</tr>
 	</c:forEach>
 </tbody>

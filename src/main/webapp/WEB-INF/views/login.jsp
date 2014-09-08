@@ -5,7 +5,7 @@
 <head>
 <spring:url value="/resources/css/style.css" var="stylecss"/>    
 <link href="${stylecss}" rel="stylesheet" type="text/css"/>
-<title>Login Page</title>
+<title>Logowanie</title>
 <style>
 .errorblock {
 	color: #ff0000;
@@ -16,26 +16,15 @@
 }
 </style>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script type="text/javascript">
- $(function() {
-		/* For zebra striping */
-        $("table tr:nth-child(odd)").addClass("odd-row");
-		/* For cell text alignment */
-		$("table td:first-child, table th:first-child").addClass("first");
-		/* For removing the last border */
-		$("table td:last-child, table th:last-child").addClass("last");
-});
-</script>
-
 </head>
 <body onload='document.f.j_username.focus();'>
 <div align="center">
-	<h3>Login page</h3>
+
+	<a href="index"><%@include file="logo.jsp" %></a>
  
 	<c:if test="${not empty error}">
 		<div class="errorblock">
-			Your login attempt was not successful, try again.<br /> Caused :
+			Logowanie nie powieodlo sie, sprobuj ponownie!<br /> Caused :
 			${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
 		</div>
 	</c:if>
