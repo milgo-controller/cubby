@@ -25,7 +25,7 @@
 			<td>${training.cost}</td>			
 			<td>${training.online}</td>
 			<td><a href="<spring:url value="/admin/training/edit/${training.id}" />">Edytuj</a></td>
-			<td><a href="/admin/training/remove/${training.id}" onclick="return confirm ('Removing training ${training.name}! Are you sure?');">Usun</a></td>
+			<td><a href="<spring:url value="/admin/training/remove/${training.id}" />" onclick="return confirm ('Usuwam trening ${training.name}! Czy jestes pewien?');">Usun</a></td>
 		</tr>
 	</c:forEach>
 </tbody>

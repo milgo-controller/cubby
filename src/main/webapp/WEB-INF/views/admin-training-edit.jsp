@@ -6,5 +6,5 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <%@include file="admin-header.jsp" %>
-<!--<%@include file="training-form.jsp" %>-->
+<%@include file="training-form.jsp" %>
 <%@include file="admin-footer.jsp" %>

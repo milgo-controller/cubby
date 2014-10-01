@@ -10,19 +10,19 @@ import javax.validation.constraints.Size;
 @Embeddable
 public class Address {
 
-	@NotNull(message="Enter city name!")
-	@Size(min=1, message="Enter city name!")
+	@NotNull(message="Podaj nazwe miasta!")
+	@Size(min=1, message="Podaj nazwe miasta!")
 	@Column(name="CITY")
 	public String city;
 	
-	@NotNull(message="Enter zip code!")
-	@Size(min=1, message="Enter zip code!")
+	@NotNull(message="Podaj kod pocztowy!")
+	@Size(min=1, message="Podaj kod pocztowy!")
 	@Column(name="ZIPCODE")
-	@Pattern(regexp="^\\d{2}(?:[-\\s]\\d{3})?$", message="Invalid zip code format!")
+	@Pattern(regexp="^\\d{2}(?:[-\\s]\\d{3})?$", message="Zly format kodu pocztowego!")
 	public String zipCode;
 	
-	@NotNull(message="Enter street name!")
-	@Size(min=1, message="Enter street name!")
+	@NotNull(message="Podaj nazwe ulicy!")
+	@Size(min=1, message="Podaj nazwe ulicy!")
 	@Column(name="STREET")
 	public String street;
 

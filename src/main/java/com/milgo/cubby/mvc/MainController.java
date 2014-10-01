@@ -146,8 +146,10 @@ public class MainController {
 		if(deletedUser != null)
 			userBo.removeUser(deletedUser);
 		
+		System.out.println("tutaj");
+		
 		/* Przekierowujemy spowrotem do strony /admin */
-		return "redirect:/admin";
+		return "redirect:/admin/allusers";
 	}
 	
 	/** 
@@ -276,7 +278,7 @@ public class MainController {
 		}
 		
 		/* Jesli formularz jest poprawny zmieñ decelowy widok na admin */
-		mav.setViewName("redirect:/admin");
+		mav.setViewName("redirect:/admin/allusers");
 		
 		/* Pobieramy obiekt u¿ytkownika, który bêdzie aktualizowany */
 		User updatedUser = userBo.getUserByLogin(login);
@@ -442,7 +444,7 @@ public class MainController {
 			trainingBo.modifyTraining(training);
 		}
 		/* Przekierowujemy do widoku training-edit */
-		return "admin-training-edit";
+		return "redirect:/admin/alltrainings";
 	}
 	
 	/** 
@@ -458,7 +460,7 @@ public class MainController {
 		trainingBo.removeTraining(id);
 		
 		/* Przekierowujemy do strony /admin */
-		return "redirect:/admin";
+		return "redirect:/admin/alltrainings";
 	}
 	
 	/** 

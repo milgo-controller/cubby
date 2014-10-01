@@ -46,7 +46,7 @@ import com.milgo.cubby.validator.annotations.FieldMatch;
 		value = { 
 				@FieldMatch(first="password", 
 						second="confirmPassword", 
-						message="The password fields must match")
+						message="Hasla musza sie zgadzac")
 		} )
 public class User implements UserDetails{
 
@@ -55,19 +55,19 @@ public class User implements UserDetails{
 	@Column(name="ID", unique=true, nullable=false)
 	public Integer id;
 
-	@Size(min = 5, max = 15, message = "Wrong login length (5 to 15 letters)")
+	@Size(min = 5, max = 15, message = "Zly rozmiar (5 do 15 znakow)")
 	@Column(name="LOGIN", unique=true, nullable=false)
 	public String login;
 	
-	@Size(min = 5, max = 15, message = "Wrong password length (5 to 15 letters)")
+	@Size(min = 5, max = 15, message = "Zly rozmiar (5 do 15 znakow)")
 	@Column(name="PASSWORD", nullable=false)
 	public String password;
 	
 	@Transient
 	public String confirmPassword;
 	
-	@NotNull(message="Enter your email!")
-	@Pattern(regexp=".+@.+\\.[a-z]+", message="It is not an email!")
+	@NotNull(message="Podaj email!")
+	@Pattern(regexp=".+@.+\\.[a-z]+", message="To nie jest adres email!")
 	@Column(name="EMAIL")
 	public String email;
 		
@@ -75,17 +75,17 @@ public class User implements UserDetails{
 	public Integer enabled;
 
 	@NotNull
-	@Size(min=1, message="Enter your first name!")
+	@Size(min=1, message="Podaj imie!")
 	@Column(name="FIRSTNAME")
 	public String firstName;
 
 	@NotNull
-	@Size(min=1, message="Enter your last name!")
+	@Size(min=1, message="Podaj nazwisko!")
 	@Column(name="LASTNAME")
 	public String lastName;
 	
-	@NotNull(message="Enter your birth date!")
-	@Past(message="Only the past is valid")
+	@NotNull(message="Podaj date urodzin!")
+	@Past(message="Tylko data z przeszlosci jest dozwolona")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Column(name="BIRTHDATE")
 	public Date birthDate;

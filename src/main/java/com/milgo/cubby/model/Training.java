@@ -31,11 +31,11 @@ public class Training {
 	@Column(name="ID", unique=true, nullable=false)
 	public Integer id;
 	
-	@Size(min=5, max=25, message="Wrong name length (5 to 25 letters)!")
+	@Size(min=5, max=25, message="Zly rozmiar (5 do 25 liter)!")
 	@Column(name="NAME", unique=true, nullable=false)
 	public String name;
 	
-	@Size(min=5, max=255, message="Wrong description length (5 to 255 letters)!")
+	@Size(min=5, max=255, message="Zly rozmiar (5 do 255 liter)!")
 	@Column(name="DESCRIPTION", nullable=false)
 	public String description;
 	
