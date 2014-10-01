@@ -49,7 +49,7 @@ public class Training {
 	public String url;
 	
 	@Column(name="STARTDATE")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.NONE)
 	public Date startDate;
 	
 	@Column(name="PLACE")

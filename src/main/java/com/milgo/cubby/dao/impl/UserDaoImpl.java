@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -42,7 +43,6 @@ public class UserDaoImpl implements UserDao{
 		Set<UserTraining> trainSet = user.getUserTrainings();
 		System.out.println(trainSet.size());
 		for(UserTraining t: trainSet){
-			//System.out.println("gogogo");
 			getCurrentSession().delete(t);
 		}
 		getCurrentSession().delete(user);
@@ -72,8 +72,8 @@ public class UserDaoImpl implements UserDao{
 
 	@Transactional
 	public List<?> getAllUsers() {
-		return sessionFactory.getCurrentSession()
-				.createCriteria(User.class).list();
+		return sessionFactory.getCurrentSession().createCriteria(User.class)
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 	}
 
 	@Transactional

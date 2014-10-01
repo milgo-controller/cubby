@@ -56,7 +56,7 @@
 				<td><sf:errors path="lastName" cssClass="error" /></td>
 			</tr>
 			<tr>
-				<th><label for="user_birth_date">Data urodzenia (dd/MM/yy)</label></th>
+				<th><label for="user_birth_date">Data urodzenia (dd/mm/yyyy)</label></th>
 				<td><sf:input path="birthDate" id="user_birth_date" size="15"/></td>
 				<td><sf:errors path="birthDate" cssClass="error" /></td>
 			</tr>

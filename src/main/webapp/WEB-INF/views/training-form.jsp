@@ -3,7 +3,7 @@
 <%@ page isELIgnored ="false" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
     
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 
 function toggleVisible (chb, obj1, obj2) 
 {
@@ -25,7 +25,7 @@ function toggleVisible (chb, obj1, obj2)
 
 window.onload = toggleVisible('training_online', 'show_online', 'show_offline');
 
-</script>
+</script> -->
     
 <sf:form method="POST" modelAttribute="training" >
 	<fieldset>
@@ -48,22 +48,22 @@ window.onload = toggleVisible('training_online', 'show_online', 'show_offline');
 				<td><sf:input path="cost" id="training_cost" size="15"/></td>
 				<td><sf:errors path="cost" cssClass="error" /></td>
 			</tr>
-			<tr>
+			<!-- <tr>
 				<th><label for="training_online">Online</label></th>				
 				<td><sf:checkbox path="online" id="training_online" value="1" onclick="toggleVisible('training_online', 'show_online', 'show_offline')"/></td>
 				<td><sf:errors path="online" cssClass="error" /></td>
-			</tr>
-			<tr name="show_online" style="display:none;">
+			</tr> -->
+			<tr>
 				<th><label for="treining_url">Link</label></th>
 				<td><sf:input path="url" id="treining_url" size="25"/></td>
 				<td><sf:errors path="url" cssClass="error" /></td>
 			</tr>		
-			<tr name="show_offline" style="display:table-row;">
-				<th><label for="training_startdate">Data</label></th>
+			<tr>
+				<th><label for="training_startdate">Data (dd.MM.yyyy hh:mm)</label></th>
 				<td><sf:input path="startDate" id="training_startdate" size="15"/></td>
 				<td><sf:errors path="startDate" cssClass="error" /></td>
 			</tr>
-			<tr name="show_offline" style="display:table-row;">
+			<tr>
 				<th><label for="training_place">Miejsce</label></th>
 				<td><sf:input path="place" id="training_place" size="15"/></td>
 				<td><sf:errors path="place" cssClass="error" /></td>

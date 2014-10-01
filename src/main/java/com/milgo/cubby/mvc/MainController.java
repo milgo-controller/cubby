@@ -1,6 +1,7 @@
 package com.milgo.cubby.mvc;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -336,9 +337,9 @@ public class MainController {
 	public int validateTraining(Training training, BindingResult bindingResult)
 	{
 		/* Ustawiamy czy trening jest treningiem online */
-		if(training.getOnline() == null)
+		/*if(training.getOnline() == null)
 			training.setOnline(0);
-		else training.setOnline(1);
+		else training.setOnline(1);*/
 		
 		/* Jeœli administarot nie wpisa³ ceny to cena = 0 */
 		if(training.getCost() == null)
@@ -354,9 +355,9 @@ public class MainController {
 			return 1;
 		}
 		
-		/* Jesli trening nie jest online */ 
-	    if(training.getOnline() == 0){
-	    	
+		/* Jesli trening nie jest online */
+		if(training.getUrl() == null)
+	    {
 	    	/* Sprawdz czy data jest ustawiona. Jeœli nie to zakoñcz funkcje i zwróæ 1 (co oznacza b³¹d) */
 	    	if(training.getStartDate() == null){
 	    		bindingResult.rejectValue("startDate", "", "Please enter date of training!");
@@ -368,12 +369,21 @@ public class MainController {
 				bindingResult.rejectValue("place", "", "Please enter place of training!");
 				return 1;
 	    	}
+			
+			training.setOnline(0);
 	    }
-	    else{ /* Jeœli trening jest online sprawdŸ czy URL nie jest pusty */
-	    	if(training.getUrl().isEmpty()){
-				bindingResult.rejectValue("url", "", "Please enter url!");
-				return 1;
+	    else
+	    { 
+	    	/* Jeœli trening jest online sprawdŸ czy URL nie jest pusty */
+	    	if(training.getUrl().trim().isEmpty()){
+				/*bindingResult.rejectValue("url", "", "Please enter url!");
+				return 1;*/
+	    		training.setOnline(0);
 	    	}
+	    	else{
+	    		training.setOnline(1);
+	    	}
+	    	
 	    }
 	    
 	    /* Jesli nie by³o b³êdów to zwróæ 0 (co oznacza ze wszystko przebirg³o poprawnie) */
@@ -589,8 +599,9 @@ public class MainController {
 	    User loggedUser = userBo.getUserByLogin(name);
 	    
 		/* Pobieramy listê treningów zalogowanego u¿ytkownika i dodajemy do modelu, który bedzie przekazany do widoku */
-		List<Training> userTrainings = loggedUser.getTrainings();
-		model.put("userTrainings", userTrainings);
+		Set<UserTraining> userTrainings = loggedUser.getUserTrainings();
+		
+		model.put("trainings", userTrainings);
 		return "user-my-trainings";
 	}
 	
@@ -703,7 +714,7 @@ public class MainController {
 	    userBo.modifyUser(loggedUser);
 	    
 	    /* Przekierowujemy do strony home */
-		return "redirect:/home/alltrainings";
+		return "redirect:/home/mytrainings";
 	}
 	
 	/** 

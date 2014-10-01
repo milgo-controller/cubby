@@ -49,7 +49,11 @@
 			<td>${training.description}</td>
 			<td>${training.cost}</td>						
 			<td>${training.startDate}</td>
-			<td>${training.place}</td>
+			<td><c:choose>
+					<c:when test="${training.online == 1}">Online</c:when>
+					<c:when test="${training.online == 0}">${training.place}</c:when>
+				</c:choose>
+			</td>
 		</tr>
 	</c:forEach>
 </tbody>
